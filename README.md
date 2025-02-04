@@ -1,2 +1,4 @@
 # mb-utils
-Mel's utilities for R packages, data science, and personal publishing
+
+R package with Mel’s utilities for data science projects and personal publishing.
+
