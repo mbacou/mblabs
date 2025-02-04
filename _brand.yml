@@ -1,0 +1,51 @@
+meta:
+  name: Mel B. Labs
+  link: https://mbacou.com/
+
+logo:
+  medium: www/logo-mm.png
+
+color:
+  palette:
+    white:     "#ffffff"
+    black:     "#000000"
+    cyan:      "#789494"
+    teal:      "#445e64"
+    dark:      "#222e32"
+    pink:      "#aea39a"
+    purple:    "#98796f"
+    indigo:    "#9b59b6"
+    blue:      "#3daee9"
+    green:     "#27ae60"
+    yellow:    "#edcd37"
+    orange:    "#f67400"
+    red:       "#da4453"
+    light:     "#eff0f1"
+    gray:      "#505050"
+  
+  foreground: gray
+  background: white
+  primary:    purple
+  secondary:  cyan
+  success:    teal
+
+typography:
+  fonts:
+    - family: Source Sans 3
+      source: google
+      weight: [400, 500]
+    - family: Roboto Condensed
+      source: google
+      weight: [300, 400, 500]
+    - family: Roboto Mono
+      source: google
+      weight: [400, 500]
+    - family: Oswald
+      source: google
+      weight: [300, 400, 500]
+  base: Source Sans 3
+  headings: Oswald
+  monospace: Roboto Mono
+  monospace-inline: Roboto Condensed
+
+
