@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{brand.colors}
 \alias{brand.colors}
-\title{MBLabs color ramp}
+\title{Brand color ramp}
 \usage{
 brand.colors(
   x = length(pal()),

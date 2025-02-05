@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{pal}
 \alias{pal}
-\title{MBLabs color palette}
+\title{Brand color palette}
 \usage{
 pal(x, named = TRUE)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{scale_brand_df}
 \alias{scale_brand_df}
-\title{MBLabs fill color scale}
+\title{Branded fill color scale}
 \usage{
 scale_brand_df(...)
 }

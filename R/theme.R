@@ -1,6 +1,6 @@
-#' MBLabs brand
+#' Fetch project branding
 #'
-#' Make this package compatible with Quarto `brand.yml` branding features. Branding can be read from a per-project file, custom file, or use this package defaults.
+#' Make this package compatible with Quarto `brand.yml` branding features. Branding can be read from a project file, or else it will use this package defaults.
 #'
 #' @param file path to a structured `_brand.yml` file 
 #' @inheritDotParams yaml::read_yaml
@@ -12,13 +12,12 @@
 #'
 #' @export
 brand <- function(file="_brand.yml", ...) {
-  f = read_yaml(file, ...)
-  if(is.null(f)) read_yaml(system.file("_brand.yml", package="mblabs"))
-  else f
+  f = if(file.exists(file)) file else system.file("brand.yml", package="mbthemes")
+  read_yaml(f)
 }
 
 
-#' MBLabs color palette
+#' Brand color palette
 #'
 #' Utility function to return a color palette derived from the active Bootstrap theme and branding elements. By default colors are read from a stuctured `_brand.yaml` file (or from this package default brand).
 #'
@@ -38,25 +37,21 @@ pal <- function(x, named = TRUE) {
   if(named) e else unname(e)
 }
 
-#' Apply branding to **base**, **lattice** and **ggplot2** graphics
+#' Apply branding to base, lattice and ggplot2 graphics
 #' 
-#' Applies active branding to `thematic::thematic_on()`.
+#' Applies active project branding to graphics using `thematic` R package utilities.
 #' 
 #' @inheritParams thematic::thematic_on
 #' @importFrom thematic thematic_on
 #' @return a theme object as a list
 #' @examples
-#' brand_on()
+#' #brand_on()
 #' lattice::show.settings()
 #' 
 #' hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2), col=1:11, border=12, xlab=NA)
 #' grid(NA, NULL, col=4)
 #' curve(dchisq(x, df=4), col=2, lty=2, lwd=2, add=TRUE)
 #' 
-#' require(ggplot2)
-#' ggplot(faithfuld, aes(waiting, eruptions, z=density)) +
-#'   geom_raster(aes(fill=density)) +
-#'   geom_contour()
 #' 
 #' @export
 brand_on <- function(
@@ -69,7 +64,7 @@ brand_on <- function(
 ) thematic_on(bg, fg, accent, font, sequential, qualitative)
 
 
-#' MBLabs color ramp
+#' Brand color ramp
 #'
 #' Qualitative color ramp derived from active branding.
 #'
@@ -91,9 +86,9 @@ brand.colors <- function(
   ...) alpha(colorRampPalette(unname(colors), ...)(x), alpha)
   
 
-#' MBLabs theme for ggplot2
-#'
-#' Custom `ggplot2` theme for `mb-labs` website matching active branding.
+#' Modified ggplot2 theme for Mel B. Labs blog posts
+#' 
+#' Opinionated `ggplot2` theme used across Mel B. Labs website. Optionally this theme matches active project branding using `_brand.yml`.
 #'
 #' @inheritParams ggthemes::theme_foundation
 #' @param base_bg Plot, panel, legend background
@@ -183,7 +178,7 @@ theme_labs <- function(
 )
   
   
-#' MBLabs discrete color scale
+#' Branded discrete color scale
 #'
 #' Custom `ggplot2` discrete color scale to match active branding.
 #'
@@ -196,7 +191,7 @@ theme_labs <- function(
 scale_brand_dc <- function(...) discrete_scale("color", palette=labs.colors, ...)
 
 
-#' MBLabs fill color scale
+#' Branded fill color scale
 #'
 #' Custom `ggplot2` discrete fill color scale to match active branding.
 #'
@@ -209,7 +204,7 @@ scale_brand_dc <- function(...) discrete_scale("color", palette=labs.colors, ...
 scale_brand_df <- function(...) discrete_scale("fill", palette=labs.colors, ...)
 
 
-#' MBLabs continuous color scale
+#' Branded continuous color scale
 #'
 #' Custom `ggplot2` continuous color scale to match active branding.
 #'
@@ -228,7 +223,7 @@ scale_brand_cc <- function(
     ...)
 
 
-#' MBLabs continuous fill scale
+#' Branded continuous fill scale
 #'
 #' Custom `ggplot2` continuous fill scale to match active branding.
 #'
@@ -247,10 +242,10 @@ scale_brand_cf <- function(
     ...)
 
 
-#' MBLabs themed **ggplot2**` graphics
+#' Modified ggplot2 objects for Mel B. Labs blog posts
 #'
-#' Convenience function to generate themed `ggplot2` plots with custom element sizes,
-#' colors and guides matching active branding.
+#' Convenience function to generate `ggplot2` plots with custom element sizes,
+#' color scales and guides matching active branding (per `_brand.yml`).
 #'
 #' @inheritParams ggplot2::ggplot
 #' @param pos_x Position of x-axis (bottom or top)

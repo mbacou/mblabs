@@ -1,11 +1,11 @@
-Package: mbutils
-Title: Mel's utilities for data science projects and personal publishing
+Package: mbthemes
+Title: Mel's utilities for data science projects and web publishing
 Version: 0.0.1
 Authors@R: c(
 	person("Melanie", "Bacou", role="cre", email="mel@mbacou.com", comment=c(ORCID="0000-0003-1810-6818"))
 	)
-Description: Handy tools and customizations for Mel's website
-License: file LICENSE
+Description: Handy tools and graphical customizations for R notebooks
+License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.1.2)
 Imports: 
@@ -19,8 +19,8 @@ Imports:
     data.table
 Suggests: here, knitr, usethis
 SystemRequirements: gdal, geos
-URL: https://github.com/mbacou/mbutils/, https://github.mbacou.io/mbutils
-BugReports: https://github.com/mbacou/mbutils/issues/
+URL: https://github.com/mbacou/mbthemes/, https://github.mbacou.io/mbthemes
+BugReports: https://github.com/mbacou/mbthemes/issues/
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Roxygen: list(markdown=TRUE)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{brand}
 \alias{brand}
-\title{MBLabs brand}
+\title{Fetch project branding}
 \usage{
 brand(file = "_brand.yml", ...)
 }
@@ -27,7 +27,7 @@ brand(file = "_brand.yml", ...)
 A list of branding elements
 }
 \description{
-Make this package compatible with Quarto \code{brand.yml} branding features. Branding can be read from a per-project file, custom file, or use this package defaults.
+Make this package compatible with Quarto \code{brand.yml} branding features. Branding can be read from a project file, or else it will use this package defaults.
 }
 \examples{
 brand()$color$palette

@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{brand_on}
 \alias{brand_on}
-\title{Apply branding to \strong{base}, \strong{lattice} and \strong{ggplot2} graphics}
+\title{Apply branding to base, lattice and ggplot2 graphics}
 \usage{
 brand_on(
   bg = "transparent",
@@ -36,19 +36,15 @@ levels exceeds the max allowed colors). Defaults to \code{\link[thematic:okabe_i
 a theme object as a list
 }
 \description{
-Applies active branding to \code{thematic::thematic_on()}.
+Applies active project branding to graphics using \code{thematic} R package utilities.
 }
 \examples{
-brand_on()
+#brand_on()
 lattice::show.settings()
 
 hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2), col=1:11, border=12, xlab=NA)
 grid(NA, NULL, col=4)
 curve(dchisq(x, df=4), col=2, lty=2, lwd=2, add=TRUE)
 
-require(ggplot2)
-ggplot(faithfuld, aes(waiting, eruptions, z=density)) +
-  geom_raster(aes(fill=density)) +
-  geom_contour()
 
 }

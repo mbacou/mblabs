@@ -1,4 +1,4 @@
-# mbutils (development version)
+# mbthemes (development version)
 
 ### v0.0.1
 

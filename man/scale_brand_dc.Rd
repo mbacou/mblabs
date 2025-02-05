@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{scale_brand_dc}
 \alias{scale_brand_dc}
-\title{MBLabs discrete color scale}
+\title{Branded discrete color scale}
 \usage{
 scale_brand_dc(...)
 }

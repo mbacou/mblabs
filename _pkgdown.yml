@@ -1,4 +1,4 @@
-url: https://github.mbacou.io/mb-utils
+url: https://github.mbacou.io/mbthemes
 destination: docs
 
 template:
@@ -26,25 +26,17 @@ authors:
 home:
   strip_header: false
   links:
-  - text: Water Accounting+
-    href: http://wateraccounting.org/
-  - text: IWMI
-    href: http://iwmi.cgiar.org/
-  - text: FAO WaPOR
-    href: https://www.fao.org/in-action/remote-sensing-for-water-productivity/en/
+  - text: Personal blog
+    href: https://mbacou.com/
 
 navbar:
-  bg: white
-  type: light
+  bg: "#ffffff"
   title: ~
   structure:
-    left:  [intro, articles, reference, news]
+    left:  [intro, reference, news]
     right: [github, telegram]
   components:
     home: ~
-    articles:
-      text: Technical Guides
-      href: articles/index.html
     reference:
       text: Reference
       href: reference/index.html
@@ -53,10 +45,10 @@ navbar:
       href: news/index.html
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/mbacou/mb-utils
+      href: https://github.com/mbacou/mbthemes
       aria-label: Github repo
-    twitter:
-      icon: fa-telegram
+    telegram:
+      icon: fab fa-telegram fa-lg
       href: https://t.me/mbacou
       aria-label: Telegram
-      
+

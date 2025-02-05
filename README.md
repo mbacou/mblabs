@@ -1,8 +1,6 @@
-<img class="float-end img-thumbnail m-3" src="mbutils.png"/>
+# mbthemes
 
-# mbutils
-
-R package with Mel’s utilities for data science projects and personal publishing.
+R package with Mel’s utilities for data science projects and (quarto) web publishing. In particular this package includes additional themes and color scales for `ggplot2`, which now all make use of Posit `brand.yml` highly flexible branding system (primary colors, color palettes, fonts, etc. can now be easily swapped across projects and clients).
 
 ## Installation
 
@@ -10,12 +8,12 @@ You can install this package from the development version on GitHub:
 
 ```r
 if (!require("remotes")) install.packages("remotes")
-remotes::install_github("mbacou/mbutils")
+remotes::install_github("mbacou/mbthemes")
 ```
 
 ## Documentation
 
-For complete R package documentation, technical guides, and deployment tips, see the [package vignettes](https://mbacou.github.io/mbutils/articles/).
+For complete R package documentation and technical guides, see the [package vignette](https://mbacou.github.io/mbthemes/).
 
 ## License
 
