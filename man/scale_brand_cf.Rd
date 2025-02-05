@@ -39,7 +39,7 @@ to map an arbitrary range to between 0 and 1.}
 a fill scale
 }
 \description{
-Custom \code{ggplot2} continnuous fill scale to match active branding.
+Custom \code{ggplot2} continuous fill scale to match active branding.
 }
 \seealso{
 scale_labs_cc

@@ -39,7 +39,7 @@ to map an arbitrary range to between 0 and 1.}
 a color scale
 }
 \description{
-Custom \code{ggplot2} continnuous color scale to match active branding.
+Custom \code{ggplot2} continuous color scale to match active branding.
 }
 \seealso{
 scale_labs_cf

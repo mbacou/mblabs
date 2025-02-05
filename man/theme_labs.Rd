@@ -190,7 +190,7 @@ elements.}
 A branded ggplot2 theme
 }
 \description{
-Custom \code{ggplot2} theme for \code{mblabs} website matching active branding.
+Custom \code{ggplot2} theme for \code{mb-labs} website matching active branding.
 }
 \examples{
 require(ggplot2)

@@ -38,22 +38,25 @@ pal <- function(x, named = TRUE) {
   if(named) e else unname(e)
 }
 
-#' Apply branding to **base** and **lattice** graphics using `thematic`
+#' Apply branding to **base**, **lattice** and **ggplot2** graphics
 #' 
-#' Utility function to set default arguments to `thematic_on()` based on the active Bootstrap theme and branding elements.
+#' Applies active branding to `thematic::thematic_on()`.
 #' 
 #' @inheritParams thematic::thematic_on
 #' @importFrom thematic thematic_on
 #' @return a theme object as a list
 #' @examples
-#' lattice::show.settings()
-#' 
-#' labs_on()
+#' brand_on()
 #' lattice::show.settings()
 #' 
 #' hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2), col=1:11, border=12, xlab=NA)
 #' grid(NA, NULL, col=4)
-#' curve(dchisq(x, df=4), col=2, lty=2, lwd=2, add=TRUE)#' 
+#' curve(dchisq(x, df=4), col=2, lty=2, lwd=2, add=TRUE)
+#' 
+#' require(ggplot2)
+#' ggplot(faithfuld, aes(waiting, eruptions, z=density)) +
+#'   geom_raster(aes(fill=density)) +
+#'   geom_contour()
 #' 
 #' @export
 brand_on <- function(
@@ -90,7 +93,7 @@ brand.colors <- function(
 
 #' MBLabs theme for ggplot2
 #'
-#' Custom `ggplot2` theme for `mblabs` website matching active branding.
+#' Custom `ggplot2` theme for `mb-labs` website matching active branding.
 #'
 #' @inheritParams ggthemes::theme_foundation
 #' @param base_bg Plot, panel, legend background
@@ -182,7 +185,7 @@ theme_labs <- function(
   
 #' MBLabs discrete color scale
 #'
-#' Custom `ggplot` discrete color scales to match active branding.
+#' Custom `ggplot2` discrete color scale to match active branding.
 #'
 #' @inheritDotParams ggplot2::discrete_scale
 #'
@@ -195,7 +198,7 @@ scale_brand_dc <- function(...) discrete_scale("color", palette=labs.colors, ...
 
 #' MBLabs fill color scale
 #'
-#' Custom `ggplot` discrete fill color scales to match active branding.
+#' Custom `ggplot2` discrete fill color scale to match active branding.
 #'
 #' @inheritDotParams ggplot2::discrete_scale
 #'
@@ -208,7 +211,7 @@ scale_brand_df <- function(...) discrete_scale("fill", palette=labs.colors, ...)
 
 #' MBLabs continuous color scale
 #'
-#' Custom `ggplot2` continnuous color scale to match active branding.
+#' Custom `ggplot2` continuous color scale to match active branding.
 #'
 #' @inheritParams pal
 #' @inheritParams scales::alpha
@@ -224,9 +227,10 @@ scale_brand_cc <- function(
     colours = alpha(pal(x, FALSE), alpha),
     ...)
 
+
 #' MBLabs continuous fill scale
 #'
-#' Custom `ggplot2` continnuous fill scale to match active branding.
+#' Custom `ggplot2` continuous fill scale to match active branding.
 #'
 #' @inheritParams pal
 #' @inheritParams scales::alpha
@@ -242,9 +246,10 @@ scale_brand_cf <- function(
     colours = alpha(pal(x, FALSE), alpha),
     ...)
 
-#' MBLabs themed `ggplot`
+
+#' MBLabs themed **ggplot2**` graphics
 #'
-#' Convenience function to generate a themed `ggplot` with custom element sizes,
+#' Convenience function to generate themed `ggplot2` plots with custom element sizes,
 #' colors and guides matching active branding.
 #'
 #' @inheritParams ggplot2::ggplot

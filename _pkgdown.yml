@@ -1,0 +1,65 @@
+url: https://github.mbacou.io/mb-utils
+destination: docs
+
+template:
+  bootstrap: 5
+  bslib:
+    bg: "#eff0f1"
+    fg: "#505050"
+    primary: "#445e64"
+    secondary: "#789494"
+    enable-rounded: false
+    base_font: 
+      google: "Source Sans 3"
+    heading_font: 
+      google: "Oswald"
+    code_font: 
+      google: "Roboto Mono"
+
+development:
+  mode: auto
+
+authors:
+  "Melanie Bacou":
+    href: https://linkedin.com/in/mbacou
+
+home:
+  strip_header: false
+  links:
+  - text: Water Accounting+
+    href: http://wateraccounting.org/
+  - text: IWMI
+    href: http://iwmi.cgiar.org/
+  - text: FAO WaPOR
+    href: https://www.fao.org/in-action/remote-sensing-for-water-productivity/en/
+
+navbar:
+  bg: white
+  type: light
+  title: ~
+  structure:
+    left:  [intro, articles, reference, news]
+    right: [github, telegram]
+  components:
+    home: ~
+    articles:
+      text: Technical Guides
+      href: articles/index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    news:
+      text: News
+      href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/mbacou/mb-utils
+      aria-label: Github repo
+    twitter:
+      icon: fa-telegram
+      href: https://t.me/mbacou
+      aria-label: Telegram
+
+
+
+

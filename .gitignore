@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.Ruserdata
+*.RData
+*.zip
+_data
+_extensions
+_drafts
+.quarto/
+/.quarto/

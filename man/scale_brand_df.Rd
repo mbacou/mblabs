@@ -77,7 +77,7 @@ every level in a legend, the layer should use \code{show.legend = TRUE}.}
 a fill scale
 }
 \description{
-Custom \code{ggplot} discrete fill color scales to match active branding.
+Custom \code{ggplot2} discrete fill color scale to match active branding.
 }
 \seealso{
 scale_labs_dc

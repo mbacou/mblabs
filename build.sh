@@ -1,15 +1,20 @@
 #!/bin/bash
 
 # description: - build and install R package
-#              - render quarto website
+#              - render documentation website
 
 cd "$(dirname "$(realpath "$0")")";
 
 # Exit on error
 set -e
 
-# Document and load
+# Document and install
 R -e 'devtools::document()'
+
+# install local
 R -e 'devtools::install()'
 
-quarto preview .
+# Build package documentation
+R -e 'pkgdown::build_site(".", preview=FALSE, new_process=TRUE)'
+
+
