@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{pal}
 \alias{pal}
-\title{Brand color palette}
+\title{Bootstrap branded color palette}
 \usage{
 pal(x, named = TRUE)
 }

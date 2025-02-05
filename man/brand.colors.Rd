@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{brand.colors}
 \alias{brand.colors}
-\title{Brand color ramp}
+\title{Bootstrap branded color ramp}
 \usage{
 brand.colors(
   x = length(pal()),
@@ -41,5 +41,6 @@ Qualitative color ramp derived from active branding.
 x <- rchisq(100, df=4)
 hist(x, freq=FALSE, ylim=c(0, 0.2), col=brand.colors(20), border="white")
 hist(x, freq=FALSE, ylim=c(0, 0.2), col=brand.colors(8, alpha=0.5), border="white")
+grid()
 
 }

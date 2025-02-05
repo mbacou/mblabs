@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{brand_on}
 \alias{brand_on}
-\title{Apply branding to base, lattice and ggplot2 graphics}
+\title{Apply Bootstrap branding to base, lattice and ggplot2 graphics}
 \usage{
 brand_on(
   bg = "transparent",
@@ -36,7 +36,7 @@ levels exceeds the max allowed colors). Defaults to \code{\link[thematic:okabe_i
 a theme object as a list
 }
 \description{
-Applies active project branding to graphics using \code{thematic} R package utilities.
+Applies Bootstrap branding to graphics using \code{thematic} R package utilities.
 }
 \examples{
 #brand_on()

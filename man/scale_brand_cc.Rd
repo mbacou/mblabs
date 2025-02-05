@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{scale_brand_cc}
 \alias{scale_brand_cc}
-\title{Branded continuous color scale}
+\title{Bootstrap branded continuous color scale}
 \usage{
 scale_brand_cc(x = c("orange", "light", "green"), alpha = 0.9, ...)
 }

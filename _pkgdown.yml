@@ -31,6 +31,7 @@ home:
 
 navbar:
   bg: "#ffffff"
+  type: light
   title: ~
   structure:
     left:  [intro, reference, news]

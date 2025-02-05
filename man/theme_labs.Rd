@@ -190,7 +190,7 @@ elements.}
 A branded ggplot2 theme
 }
 \description{
-Opinionated \code{ggplot2} theme used across Mel B. Labs website. Optionally this theme matches active project branding using \verb{_brand.yml}.
+Opinionated \code{ggplot2} theme used across \strong{Mel B. Labs} website. This theme matches Bootstrap branding using \verb{_brand.yml}.
 }
 \examples{
 require(ggplot2)

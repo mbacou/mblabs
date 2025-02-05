@@ -1,4 +1,4 @@
-#' Fetch project branding
+#' Fetch Bootstrap branding
 #'
 #' Make this package compatible with Quarto `brand.yml` branding features. Branding can be read from a project file, or else it will use this package defaults.
 #'
@@ -17,7 +17,7 @@ brand <- function(file="_brand.yml", ...) {
 }
 
 
-#' Brand color palette
+#' Bootstrap branded color palette
 #'
 #' Utility function to return a color palette derived from the active Bootstrap theme and branding elements. By default colors are read from a stuctured `_brand.yaml` file (or from this package default brand).
 #'
@@ -37,9 +37,9 @@ pal <- function(x, named = TRUE) {
   if(named) e else unname(e)
 }
 
-#' Apply branding to base, lattice and ggplot2 graphics
+#' Apply Bootstrap branding to base, lattice and ggplot2 graphics
 #' 
-#' Applies active project branding to graphics using `thematic` R package utilities.
+#' Applies Bootstrap branding to graphics using `thematic` R package utilities.
 #' 
 #' @inheritParams thematic::thematic_on
 #' @importFrom thematic thematic_on
@@ -64,7 +64,7 @@ brand_on <- function(
 ) thematic_on(bg, fg, accent, font, sequential, qualitative)
 
 
-#' Brand color ramp
+#' Bootstrap branded color ramp
 #'
 #' Qualitative color ramp derived from active branding.
 #'
@@ -77,6 +77,7 @@ brand_on <- function(
 #' x <- rchisq(100, df=4)
 #' hist(x, freq=FALSE, ylim=c(0, 0.2), col=brand.colors(20), border="white")
 #' hist(x, freq=FALSE, ylim=c(0, 0.2), col=brand.colors(8, alpha=0.5), border="white")
+#' grid()
 #'
 #' @export
 brand.colors <- function(
@@ -88,7 +89,7 @@ brand.colors <- function(
 
 #' Modified ggplot2 theme for Mel B. Labs blog posts
 #' 
-#' Opinionated `ggplot2` theme used across Mel B. Labs website. Optionally this theme matches active project branding using `_brand.yml`.
+#' Opinionated `ggplot2` theme used across **Mel B. Labs** website. This theme matches Bootstrap branding using `_brand.yml`.
 #'
 #' @inheritParams ggthemes::theme_foundation
 #' @param base_bg Plot, panel, legend background
@@ -120,7 +121,7 @@ brand.colors <- function(
 theme_labs <- function(
   base_size = 12,
   base_family = brand()$typography[["monospace-inline"]],
-  base_bg = "transparent",
+  base_bg = NA,
   base_color = pal(brand()$color$foreground, FALSE),
   ...
 ) theme_foundation(
@@ -178,7 +179,7 @@ theme_labs <- function(
 )
   
   
-#' Branded discrete color scale
+#' Bootstrap branded discrete color scale
 #'
 #' Custom `ggplot2` discrete color scale to match active branding.
 #'
@@ -188,10 +189,10 @@ theme_labs <- function(
 #' @seealso scale_labs_df
 #' @return a color scale
 #' @export
-scale_brand_dc <- function(...) discrete_scale("color", palette=labs.colors, ...)
+scale_brand_dc <- function(...) discrete_scale("color", palette=brand.colors, ...)
 
 
-#' Branded fill color scale
+#' Bootstrap branded fill color scale
 #'
 #' Custom `ggplot2` discrete fill color scale to match active branding.
 #'
@@ -201,10 +202,10 @@ scale_brand_dc <- function(...) discrete_scale("color", palette=labs.colors, ...
 #' @seealso scale_labs_dc
 #' @return a fill scale
 #' @export
-scale_brand_df <- function(...) discrete_scale("fill", palette=labs.colors, ...)
+scale_brand_df <- function(...) discrete_scale("fill", palette=brand.colors, ...)
 
 
-#' Branded continuous color scale
+#' Bootstrap branded continuous color scale
 #'
 #' Custom `ggplot2` continuous color scale to match active branding.
 #'
@@ -223,7 +224,7 @@ scale_brand_cc <- function(
     ...)
 
 
-#' Branded continuous fill scale
+#' Bootstrap branded continuous fill scale
 #'
 #' Custom `ggplot2` continuous fill scale to match active branding.
 #'
@@ -242,10 +243,10 @@ scale_brand_cf <- function(
     ...)
 
 
-#' Modified ggplot2 objects for Mel B. Labs blog posts
+#' Modified ggplot2 object with Bootstrap branding (for Mel B. Labs blog posts)
 #'
 #' Convenience function to generate `ggplot2` plots with custom element sizes,
-#' color scales and guides matching active branding (per `_brand.yml`).
+#' color scales and guides matching Bootstrap branding (per `_brand.yml`).
 #'
 #' @inheritParams ggplot2::ggplot
 #' @param pos_x Position of x-axis (bottom or top)

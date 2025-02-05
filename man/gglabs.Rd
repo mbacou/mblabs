@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{gglabs}
 \alias{gglabs}
-\title{Modified ggplot2 objects for Mel B. Labs blog posts}
+\title{Modified ggplot2 object with Bootstrap branding (for Mel B. Labs blog posts)}
 \usage{
 gglabs(
   data = NULL,
@@ -38,7 +38,7 @@ A \code{ggplot2} object with new theme elements applied
 }
 \description{
 Convenience function to generate \code{ggplot2} plots with custom element sizes,
-color scales and guides matching active branding (per \verb{_brand.yml}).
+color scales and guides matching Bootstrap branding (per \verb{_brand.yml}).
 }
 \examples{
 require(ggplot2)

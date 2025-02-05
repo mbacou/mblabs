@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{brand}
 \alias{brand}
-\title{Fetch project branding}
+\title{Fetch Bootstrap branding}
 \usage{
 brand(file = "_brand.yml", ...)
 }

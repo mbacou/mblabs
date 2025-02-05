@@ -15,6 +15,6 @@ R -e 'devtools::document()'
 R -e 'devtools::install()'
 
 # Build package documentation
-R -e 'pkgdown::build_site(".", preview=FALSE, new_process=TRUE)'
+R -e 'pkgdown::build_site(".", preview=FALSE)'
 
 

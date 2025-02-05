@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{scale_brand_cf}
 \alias{scale_brand_cf}
-\title{Branded continuous fill scale}
+\title{Bootstrap branded continuous fill scale}
 \usage{
 scale_brand_cf(x = c("orange", "light", "green"), alpha = 0.9, ...)
 }
