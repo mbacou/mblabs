@@ -10,3 +10,4 @@ log$
 out$
 qmd$
 ^LICENSE\.md$
+^data-raw$

@@ -70,3 +70,4 @@ formatted character vector
 \description{
 Fix scales::comma() for NA values
 }
+\keyword{utils}

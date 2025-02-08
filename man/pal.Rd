@@ -2,27 +2,26 @@
 % Please edit documentation in R/theme.R
 \name{pal}
 \alias{pal}
-\title{Bootstrap branded color palette}
+\title{Bootstrap color palette}
 \usage{
-pal(x, named = TRUE)
+pal(x = NULL, named = TRUE)
 }
 \arguments{
-\item{x}{color index or name(s), if missing returns the entire color palette}
+\item{x}{Color index or name(s), if missing returns the entire color palette}
 
-\item{named}{return color names (default: TRUE)}
+\item{named}{keep color names (default: TRUE)}
 }
 \value{
 A vector of (named) hex color codes extracted from Bootstrap branding
 }
 \description{
-Utility function to return a color palette derived from the active Bootstrap theme and branding elements. By default colors are read from a stuctured \verb{_brand.yaml} file (or from this package default brand).
+Color palette extracted from the active Bootstrap theme. By default colors are read from an external \verb{_brand.yaml} configuration file (or uses this package defaults).
 }
 \examples{
-pal = pal()
-pie(rep(1, length(pal)), col=pal, labels=names(pal), 
-border="white", clockwise=TRUE)
+scales::show_col(pal())
+scales::show_col(pal(c("orange", "red")))
 
 }
-\seealso{
+\references{
 \href{https://posit-dev.github.io/brand-yml/}{brand.yml}
 }

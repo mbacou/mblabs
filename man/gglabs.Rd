@@ -2,13 +2,12 @@
 % Please edit documentation in R/theme.R
 \name{gglabs}
 \alias{gglabs}
-\title{Modified ggplot2 object with Bootstrap branding (for Mel B. Labs blog posts)}
+\title{Modified ggplot with Bootstrap branding}
 \usage{
 gglabs(
   data = NULL,
   mapping = aes(),
-  pos_x = c("bottom", "top"),
-  pos_y = c("right", "left"),
+  axes = c("bottomright", "topright", "bottomleft", "topleft"),
   ...
 )
 }
@@ -20,15 +19,15 @@ must be supplied in each layer added to the plot.}
 \item{mapping}{Default list of aesthetic mappings to use for plot.
 If not specified, must be supplied in each layer added to the plot.}
 
-\item{pos_x}{Position of x-axis (bottom or top)}
-
-\item{pos_y}{Position of y-axis (right or left)}
+\item{axes}{2-length vector to control the position of X (\code{bottom} or \code{top}) and Y (\code{left} or \code{right}) axes (default: \code{c("bottom", "right")})}
 
 \item{...}{
-  Arguments passed on to \code{\link[=theme_labs]{theme_labs}}
+  Arguments passed on to \code{\link[=theme_brand]{theme_brand}}
   \describe{
-    \item{\code{base_bg}}{Plot, panel, legend background}
-    \item{\code{base_color}}{Color for text and line elements}
+    \item{\code{base_bg}}{plot, panel, legend background}
+    \item{\code{base_color}}{color for text and line elements}
+    \item{\code{grid}}{show gridlines \code{XY}, \code{X}, \code{Y} (default) or \code{n} for no gridline}
+    \item{\code{legend}}{shorthand for \code{theme(legend.position="...")} (default: \code{top})}
     \item{\code{base_size}}{base font size, given in pts.}
     \item{\code{base_family}}{base font family}
   }}
@@ -37,35 +36,45 @@ If not specified, must be supplied in each layer added to the plot.}
 A \code{ggplot2} object with new theme elements applied
 }
 \description{
-Convenience function to generate \code{ggplot2} plots with custom element sizes,
-color scales and guides matching Bootstrap branding (per \verb{_brand.yml}).
+Opinionated \code{ggplot2} with custom element sizes and color scales derived from Bootstrap branding (per \verb{_brand.yml}). Behind the scenes \code{gglabs} uses \code{theme_brand()} to control colors and fonts, and has Y-axis on the right. Axis placement can be modified with argument \code{axes}.
 }
 \examples{
 require(ggplot2)
 
-gglabs(mtcars, aes(factor(carb), mpg, fill=factor(carb))) + 
+gglabs(mtcars, aes(factor(carb), mpg, fill=factor(carb))) +
   geom_col() +
-  guides(y=guide_none(), y.sec=guide_axis()) +
   labs(
     x = "carb",
-    title = "My Long and Descriptive Plot Title",
+    title = "Default Plot with Y-axis on the Right",
     subtitle = "My very long subtitle with many units",
     caption = "My very long plot caption with many references.")
 
-gglabs(mtcars, aes(wt, mpg)) +
-  geom_smooth(color=pal("red"), fill=pal("pink")) +
-  geom_point(size=3, aes(color=carb)) +
-  labs(
-  title = "My Title",
-  subtitle = "My Subtitle",
-  caption = "My plot caption")
+# Equivalent to below
+ggplot(mtcars, aes(factor(carb), mpg, fill=factor(carb))) +
+  geom_col() +
+  scale_brand_df() +
+  guides(y=guide_axis(position="right")) +
+  theme_brand(grid="XY")
 
-gglabs(mtcars, aes(wt, mpg, color=factor(cyl))) +
-  geom_point(size=3) + 
+\dontrun{
+brand_on()
+}
+
+gglabs(mtcars, aes(wt, mpg, color=carb), axes="topright") +
+  geom_smooth(color=pal("red"), fill=pal("pink")) +
+  geom_point(size=3) +
   labs(
-  x = "cyl",
-  title = "My Title",
-  subtitle = "My Subtitle",
-  caption = "My plot caption")
+    title = "My Beautiful Plot with X-axis at the Top",
+    subtitle = "My descriptive subtitle with units",
+    caption = "My plot caption with many references.")
+
+gglabs(mtcars, aes(wt, mpg, color=factor(cyl)), 
+  grid="XY", legend="bottom", base_family="Pacifico") +
+  geom_point(size=3) +
+  labs(
+    x = "cyl",
+    title = "My Plot with Full Gridlines and Pacifico Font",
+    subtitle = "Placed the legend at the bottom",
+    caption = "My plot caption with many references.")
 
 }

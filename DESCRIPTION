@@ -1,26 +1,28 @@
-Package: mbthemes
+Package: mb.themes
 Title: Mel's utilities for data science projects and web publishing
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: c(
 	person("Melanie", "Bacou", role="cre", email="mel@mbacou.com", comment=c(ORCID="0000-0003-1810-6818"))
 	)
-Description: Handy tools and graphical customizations for R notebooks
+Description: Handy tools, theming utilities, and graphical customizations for R and Quarto notebooks
 License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.1.2)
 Imports: 
+    data.table,
     ggplot2,
     lubridate,
     htmltools,
     stringr,
     scales,
-    highcharter,  
-    sp, sf, terra,
-    data.table
+    sysfonts,
+    thematic,
+    yaml
 Suggests: here, knitr, usethis
 SystemRequirements: gdal, geos
-URL: https://github.com/mbacou/mbthemes/, https://github.mbacou.io/mbthemes
-BugReports: https://github.com/mbacou/mbthemes/issues/
+URL: https://github.com/mbacou/mb.themes/, https://github.mbacou.io/mb.themes
+BugReports: https://github.com/mbacou/mb.themes/issues/
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Roxygen: list(markdown=TRUE)
+LazyData: true

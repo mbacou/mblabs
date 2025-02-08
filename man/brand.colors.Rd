@@ -2,17 +2,12 @@
 % Please edit documentation in R/theme.R
 \name{brand.colors}
 \alias{brand.colors}
-\title{Bootstrap branded color ramp}
+\title{Bootstrap color ramp}
 \usage{
-brand.colors(
-  x = length(pal()),
-  colors = pal()[!names(pal()) \%in\% c("white", "black", "light", "gray")],
-  alpha = 0.9,
-  ...
-)
+brand.colors(n = NULL, colors = pal(), alpha = 0.9, ...)
 }
 \arguments{
-\item{x}{number of colors to interpolate}
+\item{n}{Number of colors to interpolate}
 
 \item{colors}{colors to interpolate; must be a valid argument to
     \code{\link[grDevices]{col2rgb}()}.}
@@ -22,25 +17,23 @@ brand.colors(
     \code{space} is specified.}
 
 \item{...}{
-  Arguments passed on to \code{\link[grDevices:colorRamp]{grDevices::colorRamp}}
+  Arguments passed on to \code{\link[grDevices:colorRamp]{grDevices::colorRampPalette}}
   \describe{
-    \item{\code{bias}}{a positive number.  Higher values give more widely spaced
-    colors at the high end.}
-    \item{\code{space}}{a character string; interpolation in RGB or \abbr{CIE} Lab
-    color spaces.}
-    \item{\code{interpolate}}{use spline or linear interpolation.}
+    \item{\code{}}{}
   }}
 }
 \value{
-A function to interpolate colors
+Vector of interpolated colors
 }
 \description{
-Qualitative color ramp derived from active branding.
+Qualitative color ramp derived from active branding. This ramp excludes Bootstrap's
+\strong{white}, \strong{black}, \strong{light} and \strong{gray} colors, which are typically used for
+textual elements. By default the color ramp is 90\% transparent.
 }
 \examples{
-x <- rchisq(100, df=4)
-hist(x, freq=FALSE, ylim=c(0, 0.2), col=brand.colors(20), border="white")
-hist(x, freq=FALSE, ylim=c(0, 0.2), col=brand.colors(8, alpha=0.5), border="white")
-grid()
+scales::show_col(brand.colors(alpha=1))
+scales::show_col(brand.colors(11, alpha=1, interpolate="spline"))
+scales::show_col(brand.colors(16))
+scales::show_col(brand.colors(4, alpha=.5))
 
 }

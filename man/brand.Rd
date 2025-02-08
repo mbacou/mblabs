@@ -4,35 +4,22 @@
 \alias{brand}
 \title{Fetch Bootstrap branding}
 \usage{
-brand(file = "_brand.yml", ...)
+brand(file = "_brand.yml")
 }
 \arguments{
-\item{file}{path to a structured \verb{_brand.yml} file}
-
-\item{...}{
-  Arguments passed on to \code{\link[yaml:read_yaml]{yaml::read_yaml}}
-  \describe{
-    \item{\code{fileEncoding}}{character string: if non-empty declares the
-    encoding used on a file (not a connection) so the character data can
-    be re-encoded.  See \code{\link{file}}.}
-    \item{\code{text}}{character string: if \code{file} is not supplied and this is,
-    then data are read from the value of \code{text} via a text connection.
-    Notice that a literal string can be used to include (small) data sets
-    within R code.}
-    \item{\code{error.label}}{a label to prepend to error messages (see Details).}
-    \item{\code{readLines.warn}}{logical (default:TRUE) suppress warnings from readLines used inside read_yaml}
-  }}
+\item{file}{path to \verb{_brand.yml} brand configuration file, normally this file is auto-detected in the working tree, but may be specified here to swap branding dynamically}
 }
 \value{
 A list of branding elements
 }
 \description{
-Make this package compatible with Quarto \code{brand.yml} branding features. Branding can be read from a project file, or else it will use this package defaults.
+Make this package compatible with \code{brand.yml} unified branding features. Branding can be read from a configuration file, else it will use one of these package built-in themes. Refer to \href{https://posit-dev.github.io/brand-yml/}{brand.yml} documentation.
 }
 \examples{
-brand()$color$palette
+scales::show_col(unlist(brand()$color$palette))
+getOption("mb.themes.brand")$meta$name
 
 }
-\seealso{
+\references{
 \href{https://posit-dev.github.io/brand-yml/}{brand.yml}
 }

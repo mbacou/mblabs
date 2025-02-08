@@ -1,6 +1,8 @@
-# mbthemes
+# mb.themes
 
-R package with Mel’s utilities for data science projects and (quarto) web publishing. In particular this package includes additional themes and color scales for `ggplot2`, which now all make use of Posit `brand.yml` highly flexible branding system (primary colors, color palettes, fonts, etc. can now be easily swapped across projects and clients).
+R package with Mel’s utilities for data science projects and (Quarto) web publishing. 
+
+In particular this package includes branding themes and color scales for `ggplot2`, which now make use of the new `brand.yml` highly flexible branding system (i.e.primary colors, color palettes, fonts, etc. can now be easily swapped across projects and clients using external YAML config files and standard Bootstrap Sass variables).
 
 ## Installation
 
@@ -13,7 +15,7 @@ remotes::install_github("mbacou/mbthemes")
 
 ## Documentation
 
-For complete R package documentation and technical guides, see the [package vignette](https://mbacou.github.io/mbthemes/).
+For complete R package documentation and technical guides, see the [package vignette](https://mbacou.github.io/mb.themes/).
 
 ## License
 

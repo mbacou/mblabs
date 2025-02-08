@@ -1,130 +1,312 @@
+#' Default Bootstrap branding for Mel B. Labs
+#'
+#' Branding is read from a user-specified `_brand.yml` file or from this package if no file is found in the working path.
+#' 
+#' @name BRAND
+#' @docType data
+#' @keywords dataset
+#' @references [brand.yml](https://posit-dev.github.io/brand-yml/)
+#' @format List of default branding elements (colors, fonts)
+#' @examples
+#' names(BRAND)
+#' 
+"BRAND"
+
+
 #' Fetch Bootstrap branding
 #'
-#' Make this package compatible with Quarto `brand.yml` branding features. Branding can be read from a project file, or else it will use this package defaults.
+#' Make this package compatible with `brand.yml` unified branding features. Branding can be read from a configuration file, else it will use one of these package built-in themes. Refer to [brand.yml](https://posit-dev.github.io/brand-yml/) documentation.
 #'
-#' @param file path to a structured `_brand.yml` file 
-#' @inheritDotParams yaml::read_yaml
+#' @param file path to `_brand.yml` brand configuration file, normally this file is auto-detected in the working tree, but may be specified here to swap branding dynamically
 #' @importFrom yaml read_yaml
+#' @importFrom sysfonts font_add_google
 #' @return A list of branding elements
-#' @seealso [brand.yml](https://posit-dev.github.io/brand-yml/)
+#' @references [brand.yml](https://posit-dev.github.io/brand-yml/)
 #' @examples
-#' brand()$color$palette
+#' scales::show_col(unlist(brand()$color$palette))
+#' getOption("mb.themes.brand")$meta$name
 #'
 #' @export
-brand <- function(file="_brand.yml", ...) {
-  f = if(file.exists(file)) file else system.file("brand.yml", package="mbthemes")
-  read_yaml(f)
+brand <- function(file = "_brand.yml") {
+  b = if(file.exists(file)) read_yaml(file) else {
+    message("No `", file, "` configuration found in the working tree. Using `",
+    BRAND$meta$name,  "` brand instead.")
+    BRAND
+  }
+  if(!all(c("color", "typography") %in% names(b))) stop(
+    "Boostrap branding needs color and font definitions.")
+  
+  options(mb.themes.brand = b)
+  b
 }
 
 
-#' Bootstrap branded color palette
+#' Bootstrap color palette
 #'
-#' Utility function to return a color palette derived from the active Bootstrap theme and branding elements. By default colors are read from a stuctured `_brand.yaml` file (or from this package default brand).
+#' Color palette extracted from the active Bootstrap theme. By default colors are read from an external `_brand.yaml` configuration file (or uses this package defaults).
 #'
-#' @param x color index or name(s), if missing returns the entire color palette
-#' @param named return color names (default: TRUE)
+#' @param x Color index or name(s), if missing returns the entire color palette
+#' @param named keep color names (default: TRUE)
+#' @importFrom scales alpha
 #' @return A vector of (named) hex color codes extracted from Bootstrap branding
-#' @seealso [brand.yml](https://posit-dev.github.io/brand-yml/)
+#' @references [brand.yml](https://posit-dev.github.io/brand-yml/)
 #' @examples
-#' pal = pal()
-#' pie(rep(1, length(pal)), col=pal, labels=names(pal), 
-#' border="white", clockwise=TRUE)
+#' scales::show_col(pal())
+#' scales::show_col(pal(c("orange", "red")))
 #'
 #' @export
-pal <- function(x, named = TRUE) {
-  e = if(missing(x)) brand()$color$palette else brand()$color$palette[x]
-  e = unlist(e)
-  if(named) e else unname(e)
+pal <- function(x = NULL, named = TRUE) {
+  b = getOption("mb.themes.brand")
+  b = if(is.null(b)) brand() else b
+  e = if(missing(x)) b$color$palette else b$color$palette[x]
+  e = if(named) e else unname(e)
+  unlist(e)
 }
 
-#' Apply Bootstrap branding to base, lattice and ggplot2 graphics
+
+#' Bootstrap color ramp
+#'
+#' Qualitative color ramp derived from active branding. This ramp excludes Bootstrap's
+#' **white**, **black**, **light** and **gray** colors, which are typically used for
+#' textual elements. By default the color ramp is 90% transparent.
+#'
+#' @param n Number of colors to interpolate
+#' @inheritParams grDevices::colorRampPalette
+#' @inheritDotParams grDevices::colorRampPalette
+#' @importFrom scales alpha
+#' @return Vector of interpolated colors
+#' @examples
+#' scales::show_col(brand.colors(alpha=1))
+#' scales::show_col(brand.colors(11, alpha=1, interpolate="spline"))
+#' scales::show_col(brand.colors(16))
+#' scales::show_col(brand.colors(4, alpha=.5))
+#'
+#' @export
+brand.colors <- function(n = NULL, colors = pal(), alpha = .9, ...) {
+  omit = c("white", "black", "light", "gray")
+  if(missing(n)) return(colors[!names(colors) %in% omit])
+  colors = colors[!names(colors) %in% omit]
+  alpha(colorRampPalette(unname(colors), ...)(n), alpha)
+}
+
+
+#' Bootstrap branded discrete color scale
+#'
+#' Custom `ggplot2` discrete color scale to match active branding.
+#'
+#' @inheritDotParams ggplot2::discrete_scale
+#'
+#' @importFrom ggplot2 discrete_scale
+#' @seealso scale_labs_df
+#' @return a color scale
+#' @export
+scale_brand_dc <- function(...) {
+  discrete_scale("color", palette=brand.colors, ...)
+}
+
+
+#' Bootstrap branded discrete fill scale
+#'
+#' Custom `ggplot2` discrete fill color scale to match active branding.
+#'
+#' @inheritDotParams ggplot2::discrete_scale
+#'
+#' @importFrom ggplot2 discrete_scale
+#' @seealso scale_labs_dc
+#' @return a fill scale 
+#' @export
+scale_brand_df <- function(...) {
+  discrete_scale("fill", palette=brand.colors, ...)
+}
+
+
+#' Bootstrap branded continuous color scale
+#'
+#' Custom `ggplot2` continuous color scale to match active branding.
+#'
+#' @inheritParams pal
+#' @inheritDotParams ggplot2::scale_colour_gradientn
+#' @importFrom ggplot2 scale_colour_gradientn
+#' @seealso scale_labs_cf
+#' @return a color scale
+#' @export
+scale_brand_cc <- function(x = c("orange", "light", "green"), ...) {
+  scale_colour_gradientn(colours = pal(x, FALSE), ...)
+}
+
+
+#' Bootstrap branded continuous fill scale
+#'
+#' Custom `ggplot2` continuous fill scale to match active branding.
+#'
+#' @inheritParams pal
+#' @inheritDotParams ggplot2::scale_fill_gradientn
+#' @importFrom ggplot2 scale_fill_gradientn
+#' @seealso scale_labs_cc
+#' @return a fill scale
+#' @export
+scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
+  scale_fill_gradientn(colours = pal(x, FALSE), ...)
+}
+
+
+#' Apply Bootstrap branding to base, lattice and ggplot graphics
+#'
+#' Applies Bootstrap branding to R graphics using `thematic` R package utilities. This function behaves like `thematic::thematic_on()` but instead of passing individual colors and fonts, the user can provide an external `_brand.yml` configuration file instead. `brand_on` take color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit `_brand.yml` instead). 
 #' 
-#' Applies Bootstrap branding to graphics using `thematic` R package utilities.
-#' 
+#' This package provides global `option("mb.themes.brand")`, the active Boostrap theme.
+#'
+#' @inheritParams brand
+#' @param gradient Vector of Bootstrap color (names) to use in plot gradients
+#' @param n Number of colors to interpolate in plot gradients (default: 20)
+#' @param alpha Transparency for color scales between 0 and 1 (default: .9)
 #' @inheritParams thematic::thematic_on
-#' @importFrom thematic thematic_on
+#' @importFrom thematic thematic_on thematic_off font_spec
+#' @importFrom scales alpha
 #' @return a theme object as a list
 #' @examples
-#' #brand_on()
+#' \dontrun{
+#' brand_on()
+#'
+#' # base
+#' hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2),
+#' col=1:11, border="white", xlab=NA)
+#' grid(NA, NULL, col="white")
+#' curve(dchisq(x, df=4), col=3, lty=2, lwd=2, add=TRUE)
+#'
+#' # lattice
 #' lattice::show.settings()
+#'
+#' # ggplot2
+#' require(ggplot2)
+#' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
+#'   geom_col() +
+#'   labs(
+#'     x = "carb", y = NULL,
+#'     title = "Default Plot with Bootstrap Branding",
+#'     subtitle = "My very long subtitle with many units",
+#'     caption = "My very long plot caption with many references.")
 #' 
-#' hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2), col=1:11, border=12, xlab=NA)
-#' grid(NA, NULL, col=4)
-#' curve(dchisq(x, df=4), col=2, lty=2, lwd=2, add=TRUE)
+#' brand_on(fg="white", bg="purple", gradient=c("teal", "light", "dark"), alpha=1)
+#' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
+#'   geom_col()
 #' 
+#' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
+#'   geom_col() +
+#'   guides(y=guide_axis(position="right")) +
+#'   theme_brand(base_bg="light")
+#' 
+#' }
 #' 
 #' @export
 brand_on <- function(
-  bg = "transparent",
-  fg = pal(brand()$color$foreground, FALSE),
-  accent = pal(unlist(brand()$color[c("primary", "secondary")]), FALSE),
-  font = brand()$typography[["monospace-inline"]],
-  sequential = colorRampPalette(pal(c("orange", "light", "green")))(20),
-  qualitative = brand.colors()
-) thematic_on(bg, fg, accent, font, sequential, qualitative)
-
-
-#' Bootstrap branded color ramp
-#'
-#' Qualitative color ramp derived from active branding.
-#'
-#' @param x number of colors to interpolate
-#' @inheritParams grDevices::colorRamp#' 
-#' @inheritParams scales::alpha
-#' @inheritDotParams grDevices::colorRamp
-#' @return A function to interpolate colors
-#' @examples
-#' x <- rchisq(100, df=4)
-#' hist(x, freq=FALSE, ylim=c(0, 0.2), col=brand.colors(20), border="white")
-#' hist(x, freq=FALSE, ylim=c(0, 0.2), col=brand.colors(8, alpha=0.5), border="white")
-#' grid()
-#'
-#' @export
-brand.colors <- function(
-  x = length(pal()),
-  colors = pal()[!names(pal()) %in% c("white", "black", "light", "gray")],
-  alpha = 0.9,
-  ...) alpha(colorRampPalette(unname(colors), ...)(x), alpha)
+  file = NULL,
+  bg = "background", 
+  fg = "foreground", 
+  accent = c("primary", "secondary"), 
+  font = "monospace-inline", 
+  sequential = NULL, qualitative = NULL,
+  gradient = c("orange", "light", "green"), n = 20, alpha = .9
+) {
   
+  # Reuse existing brand if any, else use file or this package defaults
+  b = if(missing(file)) brand() else brand(file)
+  p = pal()
+  
+  # Set sensible arguments to thematic_on
+  bg = if(is.na(p[bg])) p[ b$color[[bg]] ] else p[bg]
+  fg = if(is.na(p[fg])) p[ b$color[[fg]] ] else p[fg]
+  accent = ifelse(is.na(p[accent]), p[ unlist(b$color[accent]) ], p[accent])
+  font = if(is.null(b$typography[[font]])) font else b$typography[[font]]
 
-#' Modified ggplot2 theme for Mel B. Labs blog posts
-#' 
-#' Opinionated `ggplot2` theme used across **Mel B. Labs** website. This theme matches Bootstrap branding using `_brand.yml`.
+  # Gradient scale
+  sequential = if(missing(sequential)) 
+  alpha(colorRampPalette(p[gradient])(n), alpha) else sequential
+  
+  # Qualitative palette
+  qualitative = if(missing(qualitative)) brand.colors(alpha=alpha) else qualitative
+  
+  args = list(bg=bg, fg=fg, accent=unname(accent), font=font_spec(font), 
+    sequential=sequential, qualitative=qualitative)
+  do.call(thematic_on, args, envir=parent.frame(n=2))
+}
+
+
+#' Bootsrap branded ggplot theme
+#'
+#' Opinionated `ggplot2` theme with unified Bootstrap branding using external `_brand.yml` configuration.
 #'
 #' @inheritParams ggthemes::theme_foundation
-#' @param base_bg Plot, panel, legend background
-#' @param base_color Color for text and line elements
+#' @param base_bg plot, panel, legend background
+#' @param base_color color for text and line elements
+#' @param grid show gridlines `XY`, `X`, `Y` (default) or `n` for no gridline
+#' @param legend shorthand for `theme(legend.position="...")` (default: `top`)
 #' @inheritDotParams ggplot2::theme
 #'
-#' @return A branded ggplot2 theme
+#' @return A ggplot2 theme
 #' @importFrom ggthemes theme_foundation
+#' @importFrom stringr str_detect
+#' @importFrom sysfonts font_families font_add_google
 #' @examples
 #' require(ggplot2)
 #'
-#' ggplot(mtcars, aes(factor(carb), mpg, fill=factor(carb))) + geom_col() +
-#'   guides(y=guide_none(), y.sec=guide_axis()) +
+#' ggplot(mtcars, aes(factor(carb), mpg, fill=factor(carb))) +
+#'   geom_col() +
+#'   guides(y=guide_axis(position="right")) +
 #'   labs(
-#'     title = "Plot with default fonts and color scheme",
+#'     title = "Plot with default fonts and color palette",
 #'     subtitle = "My very long subtitle with many units",
 #'     caption = "My very long plot caption with many references.") +
-#'     theme_labs()
+#'     theme_brand()
 #'
 #' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) + geom_col() +
-#'   guides(y=guide_none(), y.sec=guide_axis()) +
+#'   guides(y=guide_axis(position="right")) +
 #'   labs(
-#'     title = "Same plot with `mblabs` font and color scheme",
+#'     title = "Same Plot with no Bootstrap Branding",
 #'     subtitle = "My very long subtitle with many units",
 #'     caption = "My very long plot caption with many references.") +
-#'     theme_labs()
+#'     theme_brand(grid="XY", 
+#'       base_color="gray", base_bg="white", base_family="Pacifico")
+#' 
+#' \dontrun{
+#' brand_on(font="Oswald")
+#' }
+#' 
+#' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) + geom_col() +
+#'   guides(y=guide_axis(position="right")) +
+#'   labs(
+#'     title = "Same plot with Bootstrap Branding",
+#'     subtitle = "My very long subtitle with many units",
+#'     caption = "My very long plot caption with many references.") +
+#'     theme_brand(base_color="light", base_bg="dark")
 #'
 #' @export
-theme_labs <- function(
+theme_brand <- function(
   base_size = 12,
-  base_family = brand()$typography[["monospace-inline"]],
-  base_bg = NA,
-  base_color = pal(brand()$color$foreground, FALSE),
+  base_family = NULL,
+  base_bg = NULL,
+  base_color = NULL,
+  grid = c("Y", "X", "XY", "n"),
+  legend = c("top", "bottom", "right", "left"),
   ...
-) theme_foundation(
+) {
+  
+  grid = match.arg(grid)
+  legend = match.arg(legend)
+  
+  if(is.null(getOption("mb.themes.brand"))
+) {
+  message("Not using any Bootstrap branding. Call `brand_on()` to modify.")
+} else {
+  base_bg = if(missing(base_bg)) NULL else pal(base_bg)
+  base_color  = if(missing(base_color)) NULL else pal(base_color)
+}
+
+# Get font if noy found, assume Google font
+if(!missing(base_family) && !base_family %in% font_families()
+  ) font_add_google(base_family)
+
+theme_foundation(
   base_size = base_size,
   base_family = base_family
   
@@ -139,11 +321,15 @@ theme_labs <- function(
   
   panel.grid = element_line(color=NULL, linetype=3),
   panel.grid.major = element_line(color=base_color),
-  panel.grid.major.x = element_blank(),
   panel.grid.minor = element_blank(),
   
+  panel.grid.major.x = if(str_detect(grid, "X")) element_line() 
+  else element_blank(),
+  panel.grid.major.y = if(str_detect(grid, "Y")) element_line() 
+  else element_blank(),
+  
   plot.title = element_text(face="plain", hjust=0, size=base_size*1.33),
-  plot.subtitle = element_text(margin=margin(0,0,.5,0, "lines"),
+  plot.subtitle = element_text(margin=margin(0,0,1,0, "lines"),
   face="plain", size=base_size, hjust=0),
   plot.caption = element_text(margin=margin(0,3,0,0, "lines"),
   size=base_size*0.8, hjust=0),
@@ -154,8 +340,7 @@ theme_labs <- function(
   axis.text = element_text(size=base_size),
   axis.text.x = element_text(color=NULL, size=base_size*0.9),
   axis.text.y = element_text(color=NULL, hjust=0),
-  axis.title.x = element_text(color=base_color, size=base_size, 
-    face="bold", hjust=1, vjust=-2),
+  axis.title.x = element_text(color=base_color, size=base_size, face="bold", hjust=1, vjust=-2),
   axis.title.y = element_blank(),
   axis.ticks = element_line(color=NULL),
   axis.ticks.length = unit(0.25, "lines"),
@@ -165,150 +350,81 @@ theme_labs <- function(
   axis.line.y = element_blank(),
   
   legend.background = element_rect(fill=NA, color=NA),
-  legend.box = "horizontal",
   legend.box.background = element_rect(fill=NA, color=NA),
-  legend.title = element_text(size=base_size*0.9, margin=margin(.5,0,.5,0, "lines")),
+  legend.title = element_text(size=base_size*0.9, margin=margin(0,0,.75,0, "lines")),
   legend.title.position = "top",
-  legend.margin = margin(0.25,0,0,0, "lines"),
-  legend.key.size = unit(0.8, "lines"),
-  legend.key.width = unit(base_size*2, "pt"),
-  legend.text = element_text(size=base_size*0.9, hjust=1),
-  legend.position="top", legend.justification=0,
-  legend.direction="horizontal",
-  ...
-)
-  
-  
-#' Bootstrap branded discrete color scale
-#'
-#' Custom `ggplot2` discrete color scale to match active branding.
-#'
-#' @inheritDotParams ggplot2::discrete_scale
-#'
-#' @importFrom ggplot2 discrete_scale
-#' @seealso scale_labs_df
-#' @return a color scale
-#' @export
-scale_brand_dc <- function(...) discrete_scale("color", palette=brand.colors, ...)
+  legend.text = element_text(size=base_size*0.8, hjust=1),
+  legend.position = legend, legend.justification = 0
+) + 
+theme(...)
+}
 
 
-#' Bootstrap branded fill color scale
+#' Modified ggplot with Bootstrap branding
 #'
-#' Custom `ggplot2` discrete fill color scale to match active branding.
-#'
-#' @inheritDotParams ggplot2::discrete_scale
-#'
-#' @importFrom ggplot2 discrete_scale
-#' @seealso scale_labs_dc
-#' @return a fill scale
-#' @export
-scale_brand_df <- function(...) discrete_scale("fill", palette=brand.colors, ...)
-
-
-#' Bootstrap branded continuous color scale
-#'
-#' Custom `ggplot2` continuous color scale to match active branding.
-#'
-#' @inheritParams pal
-#' @inheritParams scales::alpha
-#' @inheritDotParams ggplot2::scale_colour_gradientn
-#' @importFrom ggplot2 scale_colour_gradientn
-#' @seealso scale_labs_cf
-#' @return a color scale
-#' @export
-scale_brand_cc <- function(
-  x = c("orange", "light", "green"), 
-  alpha = 0.9, 
-  ...) scale_colour_gradientn(
-    colours = alpha(pal(x, FALSE), alpha),
-    ...)
-
-
-#' Bootstrap branded continuous fill scale
-#'
-#' Custom `ggplot2` continuous fill scale to match active branding.
-#'
-#' @inheritParams pal
-#' @inheritParams scales::alpha
-#' @inheritDotParams ggplot2::scale_fill_gradientn
-#' @importFrom ggplot2 scale_fill_gradientn
-#' @seealso scale_labs_cc
-#' @return a fill scale
-#' @export
-scale_brand_cf <- function(
-  x = c("orange", "light", "green"), 
-  alpha = 0.9, 
-  ...) scale_fill_gradientn(
-    colours = alpha(pal(x, FALSE), alpha),
-    ...)
-
-
-#' Modified ggplot2 object with Bootstrap branding (for Mel B. Labs blog posts)
-#'
-#' Convenience function to generate `ggplot2` plots with custom element sizes,
-#' color scales and guides matching Bootstrap branding (per `_brand.yml`).
+#' Opinionated `ggplot2` with custom element sizes and color scales derived from Bootstrap branding (per `_brand.yml`). Behind the scenes `gglabs` uses `theme_brand()` to control colors and fonts, and has Y-axis on the right. Axis placement can be modified with argument `axes`.
 #'
 #' @inheritParams ggplot2::ggplot
-#' @param pos_x Position of x-axis (bottom or top)
-#' @param pos_y Position of y-axis (right or left)
-#' @inheritDotParams theme_labs
+#' @param axes 2-length vector to control the position of X (`bottom` or `top`) and Y (`left` or `right`) axes (default: `c("bottom", "right")`)
+#' @inheritDotParams theme_brand
 #'
 #' @return A `ggplot2` object with new theme elements applied
 #' @import ggplot2
+#' @importFrom data.table `%ilike%`
 #' @examples
 #' require(ggplot2)
 #'
-#' gglabs(mtcars, aes(factor(carb), mpg, fill=factor(carb))) + 
+#' gglabs(mtcars, aes(factor(carb), mpg, fill=factor(carb))) +
 #'   geom_col() +
-#'   guides(y=guide_none(), y.sec=guide_axis()) +
 #'   labs(
 #'     x = "carb",
-#'     title = "My Long and Descriptive Plot Title",
+#'     title = "Default Plot with Y-axis on the Right",
 #'     subtitle = "My very long subtitle with many units",
 #'     caption = "My very long plot caption with many references.")
+#' 
+#' # Equivalent to below
+#' ggplot(mtcars, aes(factor(carb), mpg, fill=factor(carb))) +
+#'   geom_col() +
+#'   scale_brand_df() +
+#'   guides(y=guide_axis(position="right")) +
+#'   theme_brand(grid="XY")
 #'
-#' gglabs(mtcars, aes(wt, mpg)) +
+#' \dontrun{
+#' brand_on()
+#' }
+#' 
+#' gglabs(mtcars, aes(wt, mpg, color=carb), axes="topright") +
 #'   geom_smooth(color=pal("red"), fill=pal("pink")) +
-#'   geom_point(size=3, aes(color=carb)) +
+#'   geom_point(size=3) +
 #'   labs(
-#'   title = "My Title",
-#'   subtitle = "My Subtitle",
-#'   caption = "My plot caption")
+#'     title = "My Beautiful Plot with X-axis at the Top",
+#'     subtitle = "My descriptive subtitle with units",
+#'     caption = "My plot caption with many references.")
 #'
-#' gglabs(mtcars, aes(wt, mpg, color=factor(cyl))) +
-#'   geom_point(size=3) + 
+#' gglabs(mtcars, aes(wt, mpg, color=factor(cyl)), 
+#'   grid="XY", legend="bottom", base_family="Pacifico") +
+#'   geom_point(size=3) +
 #'   labs(
-#'   x = "cyl",
-#'   title = "My Title",
-#'   subtitle = "My Subtitle",
-#'   caption = "My plot caption")
+#'     x = "cyl",
+#'     title = "My Plot with Full Gridlines and Pacifico Font",
+#'     subtitle = "Placed the legend at the bottom",
+#'     caption = "My plot caption with many references.")
 #'
 #' @export
 gglabs <- function(
   data = NULL,
   mapping = aes(),
-  pos_x = c("bottom", "top"),
-  pos_y = c("right", "left"),
-  ...) {
-    
-    pos_x = match.arg(pos_x)
-    pos_y = match.arg(pos_y)
-    
-    options(
-      ggplot2.discrete.colour = scale_brand_dc,
-      ggplot2.discrete.fill = scale_brand_df,
-      ggplot2.continuous.colour = scale_brand_cc,
-      ggplot2.continuous.fill = scale_brand_cf
-    )
-    
-    ggplot(data, mapping
-    ) + guides(
-      x = if(pos_x=="top") guide_none() else guide_axis(),
-      x.sec = if(pos_x=="bottom") guide_none() else guide_axis(),
-      y = if(pos_y=="right") guide_none() else guide_axis(),
-      y.sec = if(pos_y=="left") guide_none() else guide_axis()
-      
-    ) + theme_labs(...)
-  }
+  axes = c("bottomright", "topright", "bottomleft", "topleft"),
+  ...
+) {
   
+  axes = match.arg(axes)
   
+  ggplot(data, mapping
+  ) + guides(
+    x = guide_axis(position = if(axes %ilike% "top") "top" else "bottom"),
+    y = guide_axis(position = if(axes %ilike% "right") "right" else "left")
+  ) + theme_brand(...)
+  
+}
+

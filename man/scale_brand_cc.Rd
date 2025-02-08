@@ -4,13 +4,10 @@
 \alias{scale_brand_cc}
 \title{Bootstrap branded continuous color scale}
 \usage{
-scale_brand_cc(x = c("orange", "light", "green"), alpha = 0.9, ...)
+scale_brand_cc(x = c("orange", "light", "green"), ...)
 }
 \arguments{
-\item{x}{color index or name(s), if missing returns the entire color palette}
-
-\item{alpha}{new alpha level in [0,1].  If alpha is \code{NA},
-existing alpha values are preserved.}
+\item{x}{Color index or name(s), if missing returns the entire color palette}
 
 \item{...}{
   Arguments passed on to \code{\link[ggplot2:scale_gradient]{ggplot2::scale_colour_gradientn}}

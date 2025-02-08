@@ -7,6 +7,7 @@
 #' @return formatted character vector
 #' @importFrom scales percent
 #' @importFrom data.table fifelse
+#' @keywords utils
 #' @export
 pct <- function(x, ...) fifelse(is.na(x) | !is.numeric(x), "--", percent(x, ...))
 
@@ -20,14 +21,17 @@ pct <- function(x, ...) fifelse(is.na(x) | !is.numeric(x), "--", percent(x, ...)
 #' @return formatted character vector
 #' @importFrom scales comma
 #' @importFrom data.table fifelse
+#' @keywords utils
 #' @export
 curr <- function(x, ...) fifelse(is.na(x) | !is.numeric(x), "--", comma(x, ...))
+
 
 #' Format yday dates
 #'
 #' @param x A numeric vector to format
 #' @inheritParams base::format.Date
 #' @return formatted character vector
+#' @keywords utils
 #' @export
 yday_to_date <- function(x, format="%m-%d") format(as.Date(as.character(x), format="%j"), format)
 

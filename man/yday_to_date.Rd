@@ -22,3 +22,4 @@ formatted character vector
 \description{
 Format yday dates
 }
+\keyword{utils}

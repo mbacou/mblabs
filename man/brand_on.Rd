@@ -2,18 +2,24 @@
 % Please edit documentation in R/theme.R
 \name{brand_on}
 \alias{brand_on}
-\title{Apply Bootstrap branding to base, lattice and ggplot2 graphics}
+\title{Apply Bootstrap branding to base, lattice and ggplot graphics}
 \usage{
 brand_on(
-  bg = "transparent",
-  fg = pal(brand()$color$foreground, FALSE),
-  accent = pal(unlist(brand()$color[c("primary", "secondary")]), FALSE),
-  font = brand()$typography[["monospace-inline"]],
-  sequential = colorRampPalette(pal(c("orange", "light", "green")))(20),
-  qualitative = brand.colors()
+  file = NULL,
+  bg = "background",
+  fg = "foreground",
+  accent = c("primary", "secondary"),
+  font = "monospace-inline",
+  sequential = NULL,
+  qualitative = NULL,
+  gradient = c("orange", "light", "green"),
+  n = 20,
+  alpha = 0.9
 )
 }
 \arguments{
+\item{file}{path to \verb{_brand.yml} brand configuration file, normally this file is auto-detected in the working tree, but may be specified here to swap branding dynamically}
+
 \item{bg}{a background color.}
 
 \item{fg}{a foreground color.}
@@ -31,20 +37,54 @@ numeric values. Can be a vector of color codes or a
 \item{qualitative}{a color palette for graphical markers that encode
 qualitative values (won't be used in ggplot2 when the number of data
 levels exceeds the max allowed colors). Defaults to \code{\link[thematic:okabe_ito]{okabe_ito()}}.}
+
+\item{gradient}{Vector of Bootstrap color (names) to use in plot gradients}
+
+\item{n}{Number of colors to interpolate in plot gradients (default: 20)}
+
+\item{alpha}{Transparency for color scales between 0 and 1 (default: .9)}
 }
 \value{
 a theme object as a list
 }
 \description{
-Applies Bootstrap branding to graphics using \code{thematic} R package utilities.
+Applies Bootstrap branding to R graphics using \code{thematic} R package utilities. This function behaves like \code{thematic::thematic_on()} but instead of passing individual colors and fonts, the user can provide an external \verb{_brand.yml} configuration file instead. \code{brand_on} take color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit \verb{_brand.yml} instead).
+}
+\details{
+This package provides global \code{option("mb.themes.brand")}, the active Boostrap theme.
 }
 \examples{
-#brand_on()
+\dontrun{
+brand_on()
+
+# base
+hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2),
+col=1:11, border="white", xlab=NA)
+grid(NA, NULL, col="white")
+curve(dchisq(x, df=4), col=3, lty=2, lwd=2, add=TRUE)
+
+# lattice
 lattice::show.settings()
 
-hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2), col=1:11, border=12, xlab=NA)
-grid(NA, NULL, col=4)
-curve(dchisq(x, df=4), col=2, lty=2, lwd=2, add=TRUE)
+# ggplot2
+require(ggplot2)
+ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
+  geom_col() +
+  labs(
+    x = "carb", y = NULL,
+    title = "Default Plot with Bootstrap Branding",
+    subtitle = "My very long subtitle with many units",
+    caption = "My very long plot caption with many references.")
 
+brand_on(fg="white", bg="purple", gradient=c("teal", "light", "dark"), alpha=1)
+ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
+  geom_col()
+
+ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
+  geom_col() +
+  guides(y=guide_axis(position="right")) +
+  theme_brand(base_bg="light")
+
+}
 
 }
