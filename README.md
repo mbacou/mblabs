@@ -2,7 +2,7 @@
 
 R package with Mel’s utilities for data science projects and (Quarto) web publishing. 
 
-In particular this package includes branding themes and color scales for `ggplot2`, which now make use of the new `brand.yml` highly flexible branding system (i.e.primary colors, color palettes, fonts, etc. can now be easily swapped across projects and clients using external YAML config files and standard Bootstrap Sass variables).
+In particular this package includes branding themes and color scales for `ggplot2`, building on the new **Posit** [brand.yml](https://posit-dev.github.io/brand-yml/) highly flexible branding system (i.e.primary colors, color palettes, fonts, etc. can now be easily swapped across projects and clients using external YAML config files and standard Bootstrap Sass variables).
 
 ## Installation
 
