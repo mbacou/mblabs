@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{scale_brand_dc}
 \alias{scale_brand_dc}
-\title{Bootstrap branded discrete color scale}
+\title{Discrete color scale with Bootstrap colors}
 \usage{
 scale_brand_dc(...)
 }
@@ -77,7 +77,7 @@ every level in a legend, the layer should use \code{show.legend = TRUE}.}
 a color scale
 }
 \description{
-Custom \code{ggplot2} discrete color scale to match active branding.
+Custom \code{ggplot2} discrete color scale to match active Bootstrap brand.
 }
 \seealso{
 scale_labs_df

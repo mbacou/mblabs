@@ -1,3 +1,6 @@
+# Approach used in thematic package
+.globals <- new.env(parent = emptyenv())
+
 #' Default Bootstrap branding for Mel B. Labs
 #'
 #' Branding is read from a user-specified `_brand.yml` file or from this package if no file is found in the working path.
@@ -24,19 +27,23 @@
 #' @references [brand.yml](https://posit-dev.github.io/brand-yml/)
 #' @examples
 #' scales::show_col(unlist(brand()$color$palette))
-#' getOption("mb.themes.brand")$meta$name
+#' .globals$brand$meta$name
 #'
 #' @export
 brand <- function(file = "_brand.yml") {
-  b = if(file.exists(file)) read_yaml(file) else {
-    message("No `", file, "` configuration found in the working tree. Using `",
+  b = if(file.exists(file)) { 
+    read_yaml(file) 
+  } else {
+    message("No `", file, "` config found in the working tree. Using `",
     BRAND$meta$name,  "` brand instead.")
     BRAND
   }
-  if(!all(c("color", "typography") %in% names(b))) stop(
-    "Boostrap branding needs color and font definitions.")
   
-  options(mb.themes.brand = b)
+  if(!all(c("color", "typography") %in% names(b))) { 
+    stop("Boostrap branding needs color and font definitions.")
+  }
+  
+  .globals$brand = b
   b
 }
 
@@ -56,7 +63,7 @@ brand <- function(file = "_brand.yml") {
 #'
 #' @export
 pal <- function(x = NULL, named = TRUE) {
-  b = getOption("mb.themes.brand")
+  b = .globals$brand
   b = if(is.null(b)) brand() else b
   e = if(missing(x)) b$color$palette else b$color$palette[x]
   e = if(named) e else unname(e)
@@ -90,9 +97,9 @@ brand.colors <- function(n = NULL, colors = pal(), alpha = .9, ...) {
 }
 
 
-#' Bootstrap branded discrete color scale
+#' Discrete color scale with Bootstrap colors
 #'
-#' Custom `ggplot2` discrete color scale to match active branding.
+#' Custom `ggplot2` discrete color scale to match active Bootstrap brand.
 #'
 #' @inheritDotParams ggplot2::discrete_scale
 #'
@@ -105,9 +112,9 @@ scale_brand_dc <- function(...) {
 }
 
 
-#' Bootstrap branded discrete fill scale
+#' Discrete fill scale with Bootstrap colors
 #'
-#' Custom `ggplot2` discrete fill color scale to match active branding.
+#' Custom `ggplot2` discrete fill color scale to match active Bootstrap brand.
 #'
 #' @inheritDotParams ggplot2::discrete_scale
 #'
@@ -120,9 +127,9 @@ scale_brand_df <- function(...) {
 }
 
 
-#' Bootstrap branded continuous color scale
+#' Continuous color scale with Bootstrap colors
 #'
-#' Custom `ggplot2` continuous color scale to match active branding.
+#' Custom `ggplot2` continuous color scale to match active Bootstrap brand.
 #'
 #' @inheritParams pal
 #' @inheritDotParams ggplot2::scale_colour_gradientn
@@ -135,9 +142,9 @@ scale_brand_cc <- function(x = c("orange", "light", "green"), ...) {
 }
 
 
-#' Bootstrap branded continuous fill scale
+#' Continuous fill scale with Bootstrap colors
 #'
-#' Custom `ggplot2` continuous fill scale to match active branding.
+#' Custom `ggplot2` continuous fill scale to match active Bootstrap brand.
 #'
 #' @inheritParams pal
 #' @inheritDotParams ggplot2::scale_fill_gradientn
@@ -150,11 +157,9 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 }
 
 
-#' Apply Bootstrap branding to base, lattice and ggplot graphics
+#' Apply Bootstrap brand to base, lattice and ggplot graphics
 #'
 #' Applies Bootstrap branding to R graphics using `thematic` R package utilities. This function behaves like `thematic::thematic_on()` but instead of passing individual colors and fonts, the user can provide an external `_brand.yml` configuration file instead. `brand_on` take color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit `_brand.yml` instead). 
-#' 
-#' This package provides global `option("mb.themes.brand")`, the active Boostrap theme.
 #'
 #' @inheritParams brand
 #' @param gradient Vector of Bootstrap color (names) to use in plot gradients
@@ -165,9 +170,8 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 #' @importFrom scales alpha
 #' @return a theme object as a list
 #' @examples
-#' \dontrun{
 #' brand_on()
-#'
+#' 
 #' # base
 #' hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2),
 #' col=1:11, border="white", xlab=NA)
@@ -187,7 +191,10 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 #'     subtitle = "My very long subtitle with many units",
 #'     caption = "My very long plot caption with many references.")
 #' 
-#' brand_on(fg="white", bg="purple", gradient=c("teal", "light", "dark"), alpha=1)
+#' brand_on(
+#'   fg="white", bg="purple", font="Oswald",
+#'   gradient=c("teal", "light", "dark"), alpha=1)
+#' 
 #' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
 #'   geom_col()
 #' 
@@ -195,8 +202,6 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 #'   geom_col() +
 #'   guides(y=guide_axis(position="right")) +
 #'   theme_brand(base_bg="light")
-#' 
-#' }
 #' 
 #' @export
 brand_on <- function(
@@ -206,7 +211,8 @@ brand_on <- function(
   accent = c("primary", "secondary"), 
   font = "monospace-inline", 
   sequential = NULL, qualitative = NULL,
-  gradient = c("orange", "light", "green"), n = 20, alpha = .9
+  gradient = c("orange", "light", "green"), n = 20, alpha = .9,
+  ...
 ) {
   
   # Reuse existing brand if any, else use file or this package defaults
@@ -217,18 +223,23 @@ brand_on <- function(
   bg = if(is.na(p[bg])) p[ b$color[[bg]] ] else p[bg]
   fg = if(is.na(p[fg])) p[ b$color[[fg]] ] else p[fg]
   accent = ifelse(is.na(p[accent]), p[ unlist(b$color[accent]) ], p[accent])
-  font = if(is.null(b$typography[[font]])) font else b$typography[[font]]
-
+  
+  # Brand currently lacks `font-family-sans` so we assume first declared font family is used for plot (and not necessarily base text font)
+  font = if(is.null(b$typography$font)) font else b$typography$font[[1]]$family
+  
   # Gradient scale
-  sequential = if(missing(sequential)) 
-  alpha(colorRampPalette(p[gradient])(n), alpha) else sequential
+  sequential = if(missing(sequential)) {
+    alpha(colorRampPalette(p[gradient])(n), alpha) 
+  } else sequential
   
   # Qualitative palette
-  qualitative = if(missing(qualitative)) brand.colors(alpha=alpha) else qualitative
+  qualitative = if(missing(qualitative)) {
+    brand.colors(alpha=alpha) 
+  } else qualitative
   
   args = list(bg=bg, fg=fg, accent=unname(accent), font=font_spec(font), 
-    sequential=sequential, qualitative=qualitative)
-  do.call(thematic_on, args, envir=parent.frame(n=2))
+  sequential=sequential, qualitative=qualitative, ...)
+  do.call(thematic_on, args)
 }
 
 
@@ -294,69 +305,69 @@ theme_brand <- function(
   grid = match.arg(grid)
   legend = match.arg(legend)
   
-  if(is.null(getOption("mb.themes.brand"))
-) {
-  message("Not using any Bootstrap branding. Call `brand_on()` to modify.")
-} else {
-  base_bg = if(missing(base_bg)) NULL else pal(base_bg)
-  base_color  = if(missing(base_color)) NULL else pal(base_color)
-}
-
-# Get font if noy found, assume Google font
-if(!missing(base_family) && !base_family %in% font_families()
-  ) font_add_google(base_family)
-
-theme_foundation(
-  base_size = base_size,
-  base_family = base_family
+  if(is.null(.globals$brand)) {
+    message("Not using any Bootstrap branding. Call `brand_on()` to modify.")
+  } else {
+    base_bg = if(missing(base_bg)) NULL else pal(base_bg)
+    base_color  = if(missing(base_color)) NULL else pal(base_color)
+  }
   
-) + theme(
+  # Get font if noy found, assume Google font
+  if(!missing(base_family) && !base_family %in% font_families()) {
+    font_add_google(base_family)
+  }
   
-  plot.margin = unit(c(1, 1, 1, 1), "lines"),
-  text = element_text(color=base_color, lineheight=0.9),
-  line = element_line(linetype=1, color=base_color),
-  rect = element_rect(fill=NA, linetype=0, color=NA),
-  plot.background = element_rect(fill=base_bg, color=NA),
-  panel.background = element_rect(fill=base_bg, color=NA),
-  
-  panel.grid = element_line(color=NULL, linetype=3),
-  panel.grid.major = element_line(color=base_color),
-  panel.grid.minor = element_blank(),
-  
-  panel.grid.major.x = if(str_detect(grid, "X")) element_line() 
-  else element_blank(),
-  panel.grid.major.y = if(str_detect(grid, "Y")) element_line() 
-  else element_blank(),
-  
-  plot.title = element_text(face="plain", hjust=0, size=base_size*1.33),
-  plot.subtitle = element_text(margin=margin(0,0,1,0, "lines"),
-  face="plain", size=base_size, hjust=0),
-  plot.caption = element_text(margin=margin(0,3,0,0, "lines"),
-  size=base_size*0.8, hjust=0),
-  
-  strip.background = element_rect(),
-  strip.text = element_text(face="bold", hjust=0, size=base_size),
-  
-  axis.text = element_text(size=base_size),
-  axis.text.x = element_text(color=NULL, size=base_size*0.9),
-  axis.text.y = element_text(color=NULL, hjust=0),
-  axis.title.x = element_text(color=base_color, size=base_size, face="bold", hjust=1, vjust=-2),
-  axis.title.y = element_blank(),
-  axis.ticks = element_line(color=NULL),
-  axis.ticks.length = unit(0.25, "lines"),
-  axis.ticks.y = element_blank(),
-  axis.ticks.x = element_line(color=NULL),
-  axis.line = element_line(),
-  axis.line.y = element_blank(),
-  
-  legend.background = element_rect(fill=NA, color=NA),
-  legend.box.background = element_rect(fill=NA, color=NA),
-  legend.title = element_text(size=base_size*0.9, margin=margin(0,0,.75,0, "lines")),
-  legend.title.position = "top",
-  legend.text = element_text(size=base_size*0.8, hjust=1),
-  legend.position = legend, legend.justification = 0
-) + 
-theme(...)
+  theme_foundation(
+    base_size = base_size,
+    base_family = base_family
+    
+  ) + theme(
+    
+    plot.margin = unit(c(1, 1, 1, 1), "lines"),
+    text = element_text(color=base_color, lineheight=0.9),
+    line = element_line(linetype=1, color=base_color),
+    rect = element_rect(fill=NA, linetype=0, color=NA),
+    plot.background = element_rect(fill=base_bg, color=NA),
+    panel.background = element_rect(fill=base_bg, color=NA),
+    
+    panel.grid = element_line(color=NULL, linetype=3),
+    panel.grid.major = element_line(color=base_color),
+    panel.grid.minor = element_blank(),
+    
+    panel.grid.major.x = if(str_detect(grid, "X")) element_line() 
+    else element_blank(),
+    panel.grid.major.y = if(str_detect(grid, "Y")) element_line() 
+    else element_blank(),
+    
+    plot.title = element_text(face="plain", hjust=0, size=base_size*1.33),
+    plot.subtitle = element_text(margin=margin(0,0,1,0, "lines"),
+    face="plain", size=base_size, hjust=0),
+    plot.caption = element_text(margin=margin(0,3,0,0, "lines"),
+    size=base_size*0.8, hjust=0),
+    
+    strip.background = element_rect(),
+    strip.text = element_text(face="bold", hjust=0, size=base_size),
+    
+    axis.text = element_text(size=base_size),
+    axis.text.x = element_text(color=NULL, size=base_size*0.9),
+    axis.text.y = element_text(color=NULL, hjust=0),
+    axis.title.x = element_text(color=base_color, size=base_size, face="bold", hjust=1, vjust=-2),
+    axis.title.y = element_blank(),
+    axis.ticks = element_line(color=NULL),
+    axis.ticks.length = unit(0.25, "lines"),
+    axis.ticks.y = element_blank(),
+    axis.ticks.x = element_line(color=NULL),
+    axis.line = element_line(),
+    axis.line.y = element_blank(),
+    
+    legend.background = element_rect(fill=NA, color=NA),
+    legend.box.background = element_rect(fill=NA, color=NA),
+    legend.title = element_text(size=base_size*0.9, margin=margin(0,0,.75,0, "lines")),
+    legend.title.position = "top",
+    legend.text = element_text(size=base_size*0.8, hjust=1),
+    legend.position = legend, legend.justification = 0
+  ) + 
+  theme(...)
 }
 
 

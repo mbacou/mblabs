@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{scale_brand_df}
 \alias{scale_brand_df}
-\title{Bootstrap branded discrete fill scale}
+\title{Discrete fill scale with Bootstrap colors}
 \usage{
 scale_brand_df(...)
 }
@@ -77,7 +77,7 @@ every level in a legend, the layer should use \code{show.legend = TRUE}.}
 a fill scale
 }
 \description{
-Custom \code{ggplot2} discrete fill color scale to match active branding.
+Custom \code{ggplot2} discrete fill color scale to match active Bootstrap brand.
 }
 \seealso{
 scale_labs_dc

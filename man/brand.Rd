@@ -17,7 +17,7 @@ Make this package compatible with \code{brand.yml} unified branding features. Br
 }
 \examples{
 scales::show_col(unlist(brand()$color$palette))
-getOption("mb.themes.brand")$meta$name
+.globals$brand$meta$name
 
 }
 \references{

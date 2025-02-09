@@ -10,7 +10,7 @@ You can install this package from the development version on GitHub:
 
 ```r
 if (!require("remotes")) install.packages("remotes")
-remotes::install_github("mbacou/mbthemes")
+remotes::install_github("mbacou/mb.themes")
 ```
 
 ## Documentation

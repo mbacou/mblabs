@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{scale_brand_cc}
 \alias{scale_brand_cc}
-\title{Bootstrap branded continuous color scale}
+\title{Continuous color scale with Bootstrap colors}
 \usage{
 scale_brand_cc(x = c("orange", "light", "green"), ...)
 }
@@ -36,7 +36,7 @@ to map an arbitrary range to between 0 and 1.}
 a color scale
 }
 \description{
-Custom \code{ggplot2} continuous color scale to match active branding.
+Custom \code{ggplot2} continuous color scale to match active Bootstrap brand.
 }
 \seealso{
 scale_labs_cf

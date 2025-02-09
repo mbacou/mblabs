@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{brand_on}
 \alias{brand_on}
-\title{Apply Bootstrap branding to base, lattice and ggplot graphics}
+\title{Apply Bootstrap brand to base, lattice and ggplot graphics}
 \usage{
 brand_on(
   file = NULL,
@@ -14,7 +14,8 @@ brand_on(
   qualitative = NULL,
   gradient = c("orange", "light", "green"),
   n = 20,
-  alpha = 0.9
+  alpha = 0.9,
+  ...
 )
 }
 \arguments{
@@ -50,11 +51,7 @@ a theme object as a list
 \description{
 Applies Bootstrap branding to R graphics using \code{thematic} R package utilities. This function behaves like \code{thematic::thematic_on()} but instead of passing individual colors and fonts, the user can provide an external \verb{_brand.yml} configuration file instead. \code{brand_on} take color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit \verb{_brand.yml} instead).
 }
-\details{
-This package provides global \code{option("mb.themes.brand")}, the active Boostrap theme.
-}
 \examples{
-\dontrun{
 brand_on()
 
 # base
@@ -76,7 +73,10 @@ ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
     subtitle = "My very long subtitle with many units",
     caption = "My very long plot caption with many references.")
 
-brand_on(fg="white", bg="purple", gradient=c("teal", "light", "dark"), alpha=1)
+brand_on(
+  fg="white", bg="purple", font="Oswald",
+  gradient=c("teal", "light", "dark"), alpha=1)
+
 ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
   geom_col()
 
@@ -84,7 +84,5 @@ ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
   geom_col() +
   guides(y=guide_axis(position="right")) +
   theme_brand(base_bg="light")
-
-}
 
 }

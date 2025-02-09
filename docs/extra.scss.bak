@@ -1,0 +1,146 @@
+/* Theme: mblabs */
+/* Author: BACOU, Melanie <mel@mbacou.com> */
+/* Version: v1.0.0 */
+/* Date: 2024-01-31 */
+/* See _brand.yml for colors and font Sass $brand-* variables */
+
+/*-- scss:defaults --*/
+
+$theme: "mblabs" !default;
+
+$white:      $brand-white;
+$black:      $brand-black;
+$cyan:       $brand-cyan;
+$teal:       $brand-teal;
+$dark:       $brand-dark;
+$pink:       $brand-pink;
+$purple:     $brand-purple;
+$indigo:     $brand-indigo;
+$blue:       $brand-blue;
+$green:      $brand-green;
+$yellow:     $brand-yellow;
+$orange:     $brand-orange;
+$red:        $brand-red;
+$light:      $brand-light;
+$gray:       $brand-gray;
+
+$darkgray:   darken($gray, 4%);
+$gray-100:   tint-color($gray, 90%);
+$gray-200:   tint-color($gray, 80%);
+$gray-300:   tint-color($gray, 70%);
+$gray-400:   tint-color($gray, 60%);
+$gray-500:   tint-color($gray, 50%);
+$gray-600:   tint-color($gray, 40%);
+$gray-700:   tint-color($gray, 30%);
+$gray-800:   tint-color($gray, 20%);
+$gray-900:   tint-color($gray, 10%);
+
+$body-color: $gray;
+$bg-color:   $light;
+$primary:    $purple;
+$secondary:  $cyan;
+$success:    $teal ;   
+
+$spacer: 26px;
+$spacers:
+  (
+  0: 0,
+  1: $spacer * .25,
+  2: $spacer * .5,
+  3: $spacer * 1,
+  4: $spacer * 1.5,
+  5: $spacer * 2,
+  );
+
+$font-size-base: 1rem;
+$h1-font-size:  calc($font-size-base + 15px);
+$h2-font-size:  calc($font-size-base + 9px) ;
+$h3-font-size:  calc($font-size-base + 11px);
+$h4-font-size:  calc($font-size-base + 5px);
+$h5-font-size:  calc($font-size-base + 3px);
+$h6-font-size:  calc($font-size-base);
+
+$line-height-base: 1.625;
+$headings-line-height: $line-height-base;
+$list-inline-padding: .5* $spacer;
+
+$bg-opacity: 0.1;
+$link-color: $gray-700;
+$shaded: tint-color($light, 35%);
+$text-muted: rgba($body-color, 55%);
+$secondary-color: $text-muted;
+$code-color: $text-muted;
+$enable-negative-margins: true;
+
+$blockquote-font-size: 1rem;
+$blockquote-font-color: $gray-300;
+$blockquote-margin-y: 1* $spacer;
+$blockquote-small-color: $darkgray;
+
+$border-color: $gray-200;
+$border-radius-sm: 3px;
+$border-radius: 3px;
+$border-radius-lg: 0.50rem;
+$enable-rounded: true;
+$hr-border-color: $body-color;
+$hr-opacity: .75;
+
+$table-cell-padding: 0 .5em;
+$table-cell-padding-sm: 0 .25em;
+$table-striped-bg: $shaded;
+$table-border-color: $border-color;
+
+$thumbnail-border-width: 0;
+$thumbnail-border-radius: $border-radius;
+$thumbnail-border-color: $border-color;
+
+$input-color: $text-muted;
+$input-bg: rgba($shaded, 75%);
+$input-btn-padding-y: .25* $spacer;
+$input-placeholder-color: $input-color;
+$input-border-color: $border-color;
+$input-disabled-bg: darken($input-bg, 4%);
+$input-group-addon-bg: $shaded;
+
+$breadcrumb-active-color: $body-color;
+$component-active-bg: rgba($link-color, 12%);
+
+$jumbotron-bg: $shaded;
+$label-margin-bottom: .25* $spacer;
+$list-group-bg: $input-bg;
+$list-group-border-color: $input-border-color;
+$list-group-hover-bg: lighten($component-active-bg, 20%);
+$modal-content-bg: $input-bg;
+$modal-content-border-color: $border-color;
+
+$pagination-bg: $input-bg;
+$pagination-border-color: $border-color;
+$pagination-color: $input-color;
+$pagination-disabled-bg: $input-disabled-bg;
+$pagination-hover-color: $link-color;
+$progress-bg: $input-bg;
+
+$card-bg: $white;
+$card-spacer-x: .5* $spacer;
+$card-spacer-y: .5* $spacer;
+$card-border-width: 0;
+$card-cap-bg: rgba($border-color, 10%);
+$card-border-color: $border-color;
+$card-border-radius: $border-radius;
+
+$font-weight-bold: 500;
+$font-weight-bolder: 500;
+$headings-font-color: $darkgray;
+$headings-font-weight: 400;
+$small-font-size: calc(1rem - 1px);
+
+$navbar-hover-color: $primary;
+$navbar-active-color: $dark;
+
+$nav-link-color: $body-color;
+$nav-link-hover-color: $dark;
+$nav-link-font-family: $font-family-base;
+$nav-link-font-weight: 500;
+$nav-link-font-size: 1rem;
+$nav-tabs-border-color: $border-color;
+$navbar-nav-link-padding-x: .75rem;
