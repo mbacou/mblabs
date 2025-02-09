@@ -170,7 +170,7 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 #' @importFrom scales alpha
 #' @return a theme object as a list
 #' @examples
-#' brand_on()
+#' #brand_on()
 #' 
 #' # base
 #' hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2),
@@ -191,9 +191,9 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 #'     subtitle = "My very long subtitle with many units",
 #'     caption = "My very long plot caption with many references.")
 #' 
-#' brand_on(
-#'   fg="white", bg="purple", font="Oswald",
-#'   gradient=c("teal", "light", "dark"), alpha=1)
+#' #brand_on(
+#' #  fg="white", bg="purple", font="Oswald",
+#' #  gradient=c("teal", "light", "dark"), alpha=1)
 #' 
 #' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
 #'   geom_col()

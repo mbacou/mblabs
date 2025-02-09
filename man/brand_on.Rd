@@ -52,7 +52,7 @@ a theme object as a list
 Applies Bootstrap branding to R graphics using \code{thematic} R package utilities. This function behaves like \code{thematic::thematic_on()} but instead of passing individual colors and fonts, the user can provide an external \verb{_brand.yml} configuration file instead. \code{brand_on} take color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit \verb{_brand.yml} instead).
 }
 \examples{
-brand_on()
+#brand_on()
 
 # base
 hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2),
@@ -73,9 +73,9 @@ ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
     subtitle = "My very long subtitle with many units",
     caption = "My very long plot caption with many references.")
 
-brand_on(
-  fg="white", bg="purple", font="Oswald",
-  gradient=c("teal", "light", "dark"), alpha=1)
+#brand_on(
+#  fg="white", bg="purple", font="Oswald",
+#  gradient=c("teal", "light", "dark"), alpha=1)
 
 ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
   geom_col()
