@@ -77,11 +77,11 @@ pal <- function(x = NULL, named = TRUE) {
 #' **white**, **black**, **light** and **gray** colors, which are typically used for
 #' textual elements. By default the color ramp is 90% transparent.
 #'
-#' @param n Number of colors to interpolate
+#' @param n number of colors to interpolate
 #' @inheritParams grDevices::colorRampPalette
 #' @inheritDotParams grDevices::colorRampPalette
 #' @importFrom scales alpha
-#' @return Vector of interpolated colors
+#' @return vector of n interpolated colors
 #' @examples
 #' scales::show_col(brand.colors(alpha=1))
 #' scales::show_col(brand.colors(11, alpha=1, interpolate="spline"))
@@ -93,7 +93,7 @@ brand.colors <- function(n = NULL, colors = pal(), alpha = .9, ...) {
   omit = c("white", "black", "light", "gray")
   if(missing(n)) return(colors[!names(colors) %in% omit])
   colors = colors[!names(colors) %in% omit]
-  alpha(colorRampPalette(unname(colors), ...)(n), alpha)
+  alpha(colorRampPalette(unname(colors), ...), alpha)
 }
 
 

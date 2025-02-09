@@ -7,7 +7,7 @@
 brand.colors(n = NULL, colors = pal(), alpha = 0.9, ...)
 }
 \arguments{
-\item{n}{Number of colors to interpolate}
+\item{n}{number of colors to interpolate}
 
 \item{colors}{colors to interpolate; must be a valid argument to
     \code{\link[grDevices]{col2rgb}()}.}
@@ -23,7 +23,7 @@ brand.colors(n = NULL, colors = pal(), alpha = 0.9, ...)
   }}
 }
 \value{
-Vector of interpolated colors
+vector of n interpolated colors
 }
 \description{
 Qualitative color ramp derived from active branding. This ramp excludes Bootstrap's
