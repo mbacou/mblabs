@@ -3,6 +3,7 @@
 ^_
 ^\.quarto
 ^www
+^docs
 ^posts
 ^portfolio
 aux$

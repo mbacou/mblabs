@@ -93,7 +93,7 @@ brand.colors <- function(n = NULL, colors = pal(), alpha = .9, ...) {
   omit = c("white", "black", "light", "gray")
   if(missing(n)) return(colors[!names(colors) %in% omit])
   colors = colors[!names(colors) %in% omit]
-  alpha(colorRampPalette(unname(colors), ...), alpha)
+  alpha(colorRampPalette(unname(colors), ...)(n), alpha)
 }
 
 
