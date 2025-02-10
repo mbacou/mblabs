@@ -49,13 +49,17 @@ reference:
     Utilities to control **branding** of R plots
   contents:
   - contains("brand")
+  - -contains("scale")
+  - -contains("theme")
   - pal
 
 - title: New ggplot2 geoms and scales
   desc: >
     Opinionated **ggplot2** customizations
   contents:
-  - contains("gg")  
+  - contains("gg")
+  - contains("scale")
+  - contains("theme")
 
 - title: Utilities
   desc: >

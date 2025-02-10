@@ -35,7 +35,6 @@ typography:
       weight: [300, 400, 500]
     - family: Source Sans 3
       source: google
-      weight: [400, 500]
     - family: Roboto Mono
       source: google
       weight: [400, 500]

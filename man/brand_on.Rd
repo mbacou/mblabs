@@ -2,7 +2,7 @@
 % Please edit documentation in R/theme.R
 \name{brand_on}
 \alias{brand_on}
-\title{Apply Bootstrap brand to base, lattice and ggplot graphics}
+\title{Apply Bootstrap brand to base, lattice and ggplot2 graphics}
 \usage{
 brand_on(
   file = NULL,
@@ -49,7 +49,10 @@ levels exceeds the max allowed colors). Defaults to \code{\link[thematic:okabe_i
 a theme object as a list
 }
 \description{
-Applies Bootstrap branding to R graphics using \code{thematic} R package utilities. This function behaves like \code{thematic::thematic_on()} but instead of passing individual colors and fonts, the user can provide an external \verb{_brand.yml} configuration file instead. \code{brand_on} take color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit \verb{_brand.yml} instead).
+Applies Bootstrap branding to R graphics using \code{thematic} R package utilities. This function behaves like \code{thematic::thematic_on()} but instead of passing individual colors and fonts, the user can provide an external \verb{_brand.yml} configuration file. \code{brand_on} takes color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit \verb{_brand.yml} instead).
+}
+\details{
+Typically charts will use Boostrap \strong{sans-serif} font, but as of compiling that variable is not readily available in \code{brand.yml} schema, so \code{brand_on} will take the \strong{first} font in the \strong{typography} tree.
 }
 \examples{
 #brand_on()

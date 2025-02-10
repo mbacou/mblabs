@@ -157,9 +157,11 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 }
 
 
-#' Apply Bootstrap brand to base, lattice and ggplot graphics
+#' Apply Bootstrap brand to base, lattice and ggplot2 graphics
 #'
-#' Applies Bootstrap branding to R graphics using `thematic` R package utilities. This function behaves like `thematic::thematic_on()` but instead of passing individual colors and fonts, the user can provide an external `_brand.yml` configuration file instead. `brand_on` take color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit `_brand.yml` instead). 
+#' Applies Bootstrap branding to R graphics using `thematic` R package utilities. This function behaves like `thematic::thematic_on()` but instead of passing individual colors and fonts, the user can provide an external `_brand.yml` configuration file. `brand_on` takes color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit `_brand.yml` instead). 
+#' 
+#' Typically charts will use Boostrap **sans-serif** font, but as of compiling that variable is not readily available in `brand.yml` schema, so `brand_on` will take the **first** font in the **typography** tree.
 #'
 #' @inheritParams brand
 #' @param gradient Vector of Bootstrap color (names) to use in plot gradients
