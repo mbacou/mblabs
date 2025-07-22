@@ -5,7 +5,15 @@ template:
   bootstrap: 5
   light-switch: true
   bslib:
-    brand: data-raw/_brand.yml
+    bg: "#f2f1f1"
+    fg: "#333333"
+    primary: "#5088C6"
+    secondary: "#FFFFFF"
+    code-bg: white
+    font-size-base: 1rem
+    font-weight-bold: 500
+    line-height-base: 1.5
+    enable-rounded: false
 
 development:
   mode: auto
@@ -22,6 +30,8 @@ home:
     href: https://mbacou.com/
 
 navbar:
+  bg: secondary
+  type: light
   title: ~
   structure:
     left:  [intro, reference, news]

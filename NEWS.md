@@ -1,4 +1,9 @@
-# mb.themes (development version)
+# mblabs (development version)
+
+### v0.1.0
+
+* Renamed `brand_on()` to `brand()`(returns a thematic theme)
+* Fixed color definition bugs in `brand()`
 
 ### v0.0.2
 
