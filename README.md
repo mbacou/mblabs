@@ -1,4 +1,4 @@
-# mblabs <img src="man/figures/logo.png" class="rounded float-end m-3" alt="mblabs" width="8rem" />
+# mblabs
 
 R package with Mel’s utilities for data science projects and (Quarto) web publishing. 
 

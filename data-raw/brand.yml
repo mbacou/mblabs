@@ -28,7 +28,7 @@ color:
 
 typography:
   fonts:
-    - family: Crimson Text
+    - family: Roboto Condensed
       source: google
       weight: [400, 500, 600]
     - family: M PLUS Code Latin
@@ -38,7 +38,7 @@ typography:
       source: google
       weight: [400]
   
-  base: Crimson Text
+  base: Roboto Condensed
   headings: Marck Script
   monospace: M PLUS Code Latin
 

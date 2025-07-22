@@ -4,18 +4,19 @@ destination: docs
 template:
   bootstrap: 5
   image: man/figures/logo.png
-  open-graph: true  
+  open-graph: true
+  light-switch: false
   bslib:
     bg: "#f2f1f1"
     fg: "#333333"
     primary: "#5088C6"
     secondary: "#ffffff"
+    border-color: "#e8e7e7"
     code-bg: "transparent"
     pre-bg: "#ffffff"
     font-weight-bold: 500
     line-height-base: 1.5
     border-radius: .25rem
-    bg-opacity: 1
 
 development:
   mode: auto
@@ -32,10 +33,10 @@ home:
     href: https://github.mbacou.io/mb-labs
 
 navbar:
-  background: "#ffffff"
+  bg: secondary
+  fg: "#333333"
+  type: light
   title: ~
-  tools-collapse: false
-  toggle-position: right  
   structure:
     left:  [articles, reference, news]
     right: [search, sep, github, linkedin, youtube, telegram]  
