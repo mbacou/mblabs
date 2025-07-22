@@ -11,7 +11,8 @@ List of default branding elements (colors, fonts)
 BRAND
 }
 \description{
-Branding is read from a user-specified \verb{_brand.yml} file or from this package if no file is found in the working path.
+Branding is read from a user-specified \verb{_brand.yml} file or from this package if
+no file is found in the working tree.
 }
 \examples{
 names(BRAND)

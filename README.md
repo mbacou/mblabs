@@ -1,4 +1,4 @@
-# mb.themes
+# mblabs
 
 R package with Mel’s utilities for data science projects and (Quarto) web publishing. 
 
@@ -10,12 +10,12 @@ You can install this package from the development version on GitHub:
 
 ```r
 if (!require("remotes")) install.packages("remotes")
-remotes::install_github("mbacou/mb.themes")
+remotes::install_github("mbacou/mblabs")
 ```
 
 ## Documentation
 
-For complete R package documentation and technical guides, see the [package vignette](https://mbacou.github.io/mb.themes/).
+For complete R package documentation and technical guides, see the [package vignette](https://mbacou.github.io/mblabs/).
 
 ## License
 

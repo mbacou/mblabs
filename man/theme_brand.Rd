@@ -196,7 +196,7 @@ elements.}
 A ggplot2 theme
 }
 \description{
-Opinionated \code{ggplot2} theme with unified Bootstrap branding using external \verb{_brand.yml} configuration.
+Opinionated \code{ggplot2} theme with unified Bootstrap branding using external \verb{_brand.yml} configuration. This theme does not load any branding, explicitely call \code{mblabs::brand()} or \code{mblabs::pal()} instead.
 }
 \examples{
 require(ggplot2)
@@ -218,10 +218,6 @@ ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) + geom_col() +
     caption = "My very long plot caption with many references.") +
     theme_brand(grid="XY", 
       base_color="gray", base_bg="white", base_family="Pacifico")
-
-\dontrun{
-brand_on(font="Oswald")
-}
 
 ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) + geom_col() +
   guides(y=guide_axis(position="right")) +

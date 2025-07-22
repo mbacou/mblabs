@@ -1,6 +1,6 @@
-Package: mb.themes
+Package: mblabs
 Title: Mel's utilities for data science projects and web publishing
-Version: 0.0.2
+Version: 0.1.0
 Authors@R: c(
 	person("Melanie", "Bacou", role="cre", email="mel@mbacou.com", comment=c(ORCID="0000-0003-1810-6818"))
 	)

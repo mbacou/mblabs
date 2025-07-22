@@ -4,10 +4,12 @@
 \alias{brand}
 \title{Fetch Bootstrap branding}
 \usage{
-brand(file = "_brand.yml")
+brand(file = "_brand.yml", font = c("base", "monospace", "headings"))
 }
 \arguments{
 \item{file}{path to \verb{_brand.yml} brand configuration file, normally this file is auto-detected in the working tree, but may be specified here to swap branding dynamically}
+
+\item{font}{one of \verb{_brand.yml} font families (\code{base}, \code{monospace}, \code{headings}). Uses the brand's \code{base} family by default.}
 }
 \value{
 A list of branding elements

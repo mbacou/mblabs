@@ -1,4 +1,4 @@
-url: https://github.mbacou.io/mb.themes
+url: https://github.mbacou.io/mblabs
 destination: docs
 
 template:
@@ -15,7 +15,7 @@ authors:
     href: https://linkedin.com/in/mbacou
 
 home:
-  title: Mel's utilities
+  title: Mel's Labs R utilities
   strip_header: false
   links:
   - text: Personal blog
@@ -36,7 +36,7 @@ navbar:
       href: news/index.html
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/mbacou/mb.themes
+      href: https://github.com/mbacou/mblabs
       aria-label: Github repo
     telegram:
       icon: fab fa-telegram fa-lg

@@ -3,7 +3,8 @@
 
 #' Default Bootstrap branding for Mel B. Labs
 #'
-#' Branding is read from a user-specified `_brand.yml` file or from this package if no file is found in the working path.
+#' Branding is read from a user-specified `_brand.yml` file or from this package if
+#' no file is found in the working tree.
 #' 
 #' @name BRAND
 #' @docType data
@@ -21,8 +22,8 @@
 #' Make this package compatible with `brand.yml` unified branding features. Branding can be read from a configuration file, else it will use one of these package built-in themes. Refer to [brand.yml](https://posit-dev.github.io/brand-yml/) documentation.
 #'
 #' @param file path to `_brand.yml` brand configuration file, normally this file is auto-detected in the working tree, but may be specified here to swap branding dynamically
+#' @param font one of `_brand.yml` font families (`base`, `monospace`, `headings`). Uses the brand's `base` family by default.
 #' @importFrom yaml read_yaml
-#' @importFrom sysfonts font_add_google
 #' @return A list of branding elements
 #' @references [brand.yml](https://posit-dev.github.io/brand-yml/)
 #' @examples
@@ -30,12 +31,13 @@
 #' .globals$brand$meta$name
 #'
 #' @export
-brand <- function(file = "_brand.yml") {
+brand <- function(file = "_brand.yml", font=c("base", "monospace", "headings")) {
+  font = match.arg(font)
   b = if(file.exists(file)) { 
     read_yaml(file) 
   } else {
-    message("No `", file, "` config found in the working tree. Using `",
-    BRAND$meta$name,  "` brand instead.")
+    message("No `", file, "` config found in the working tree. Using default `",
+    BRAND$meta$name,  "` theme instead.")
     BRAND
   }
   
@@ -43,8 +45,9 @@ brand <- function(file = "_brand.yml") {
     stop("Boostrap branding needs color and font definitions.")
   }
   
+  b$font = b$typography[[font]]
   .globals$brand = b
-  b
+  invisible(b)
 }
 
 
@@ -90,7 +93,7 @@ pal <- function(x = NULL, named = TRUE) {
 #'
 #' @export
 brand.colors <- function(n = NULL, colors = pal(), alpha = .9, ...) {
-  omit = c("white", "black", "light", "gray")
+  omit = c("white", "black", "gray")
   if(missing(n)) return(colors[!names(colors) %in% omit])
   colors = colors[!names(colors) %in% omit]
   alpha(colorRampPalette(unname(colors), ...)(n), alpha)
@@ -161,18 +164,19 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 #'
 #' Applies Bootstrap branding to R graphics using `thematic` R package utilities. This function behaves like `thematic::thematic_on()` but instead of passing individual colors and fonts, the user can provide an external `_brand.yml` configuration file. `brand_on` takes color and font variable names per Boostrap branding (hence, do not provide hex color codes, edit `_brand.yml` instead). 
 #' 
-#' Typically charts will use Boostrap **sans-serif** font, but as of compiling that variable is not readily available in `brand.yml` schema, so `brand_on` will take the **first** font in the **typography** tree.
+#' Typically charts will use Boostrap **sans-serif** font, but as of compiling that variable is not available in `brand.yml` schema, so `brand_theme` will take the **first** font declared in the **typography** tree.
 #'
 #' @inheritParams brand
 #' @param gradient Vector of Bootstrap color (names) to use in plot gradients
 #' @param n Number of colors to interpolate in plot gradients (default: 20)
 #' @param alpha Transparency for color scales between 0 and 1 (default: .9)
 #' @inheritParams thematic::thematic_on
-#' @importFrom thematic thematic_on thematic_off font_spec
+#' @importFrom thematic thematic_on thematic_off font_spec thematic_theme
 #' @importFrom scales alpha
+#' @importFrom showtext font_add_google showtext_auto
 #' @return a theme object as a list
 #' @examples
-#' #brand_on()
+#' thematic::thematic_set_theme(brand_theme())
 #' 
 #' # base
 #' hist(rchisq(100, df=4), freq=FALSE, ylim=c(0, 0.2),
@@ -193,10 +197,6 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 #'     subtitle = "My very long subtitle with many units",
 #'     caption = "My very long plot caption with many references.")
 #' 
-#' #brand_on(
-#' #  fg="white", bg="purple", font="Oswald",
-#' #  gradient=c("teal", "light", "dark"), alpha=1)
-#' 
 #' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) +
 #'   geom_col()
 #' 
@@ -206,28 +206,27 @@ scale_brand_cf <- function(x = c("orange", "light", "green"), ...) {
 #'   theme_brand(base_bg="light")
 #' 
 #' @export
-brand_on <- function(
+brand_theme <- function(
   file = NULL,
+  font = NULL,
   bg = "background", 
   fg = "foreground", 
   accent = c("primary", "secondary"), 
-  font = "monospace-inline", 
   sequential = NULL, qualitative = NULL,
   gradient = c("orange", "light", "green"), n = 20, alpha = .9,
   ...
 ) {
-  
+
   # Reuse existing brand if any, else use file or this package defaults
-  b = if(missing(file)) brand() else brand(file)
-  p = pal()
+  b = if(missing(file)) brand(font=font) else brand(file, font)
+  p = unlist(b$color$palette)
   
   # Set sensible arguments to thematic_on
   bg = if(is.na(p[bg])) p[ b$color[[bg]] ] else p[bg]
   fg = if(is.na(p[fg])) p[ b$color[[fg]] ] else p[fg]
-  accent = ifelse(is.na(p[accent]), p[ unlist(b$color[accent]) ], p[accent])
-  
-  # Brand currently lacks `font-family-sans` so we assume first declared font family is used for plot (and not necessarily base text font)
-  font = if(is.null(b$typography$font)) font else b$typography$font[[1]]$family
+  accent = if(is.na(p[accent[1]])) p[ unlist(b$color[accent]) ] else p[accent]
+  bg = if(is.na(bg)) "transparent" else bg
+  fg = if(is.na(fg)) "black" else fg
   
   # Gradient scale
   sequential = if(missing(sequential)) {
@@ -239,15 +238,16 @@ brand_on <- function(
     brand.colors(alpha=alpha) 
   } else qualitative
   
-  args = list(bg=bg, fg=fg, accent=unname(accent), font=font_spec(font), 
-  sequential=sequential, qualitative=qualitative, ...)
-  do.call(thematic_on, args)
+  args = list(bg=unname(bg), fg=unname(fg), accent=unname(accent), 
+    font=font_spec(b$font), 
+    sequential=sequential, qualitative=qualitative, ...)
+  do.call(thematic_theme, args)
 }
 
 
 #' Bootsrap branded ggplot theme
 #'
-#' Opinionated `ggplot2` theme with unified Bootstrap branding using external `_brand.yml` configuration.
+#' Opinionated `ggplot2` theme with unified Bootstrap branding using external `_brand.yml` configuration. This theme does not load any branding, explicitely call `mblabs::brand()` or `mblabs::pal()` instead.
 #'
 #' @inheritParams ggthemes::theme_foundation
 #' @param base_bg plot, panel, legend background
@@ -260,6 +260,7 @@ brand_on <- function(
 #' @importFrom ggthemes theme_foundation
 #' @importFrom stringr str_detect
 #' @importFrom sysfonts font_families font_add_google
+#' @importFrom showtext showtext_auto
 #' @examples
 #' require(ggplot2)
 #'
@@ -280,10 +281,6 @@ brand_on <- function(
 #'     caption = "My very long plot caption with many references.") +
 #'     theme_brand(grid="XY", 
 #'       base_color="gray", base_bg="white", base_family="Pacifico")
-#' 
-#' \dontrun{
-#' brand_on(font="Oswald")
-#' }
 #' 
 #' ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) + geom_col() +
 #'   guides(y=guide_axis(position="right")) +
@@ -308,15 +305,18 @@ theme_brand <- function(
   legend = match.arg(legend)
   
   if(is.null(.globals$brand)) {
-    message("Not using any Bootstrap branding. Call `brand_on()` to modify.")
+    message("Not using any Bootstrap branding. 
+      Call `brand()` or `pal()` explicitely to modify session environment.")
   } else {
     base_bg = if(missing(base_bg)) NULL else pal(base_bg)
     base_color  = if(missing(base_color)) NULL else pal(base_color)
+    base_family = if(missing(base_family)) .globals$brand$font else base_family
   }
   
   # Get font if noy found, assume Google font
-  if(!missing(base_family) && !base_family %in% font_families()) {
+  if(!is.null(base_family) && !base_family %in% font_families()) {
     font_add_google(base_family)
+    showtext_auto()
   }
   
   theme_foundation(
