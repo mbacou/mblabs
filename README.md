@@ -1,3 +1,5 @@
+<img class="float-end img-thumbnail m-3" src="pkgdown/mb-square.png"/>
+
 # mblabs
 
 R package with Mel’s utilities for data science projects and (Quarto) web publishing. 

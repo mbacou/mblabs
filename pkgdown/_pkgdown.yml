@@ -4,12 +4,16 @@ destination: docs
 template:
   bootstrap: 5
   light-switch: true
+  favicon: mb-square.png
+  image: mb-square.png
+  open-graph: true  
   bslib:
     bg: "#f2f1f1"
     fg: "#333333"
     primary: "#5088C6"
     secondary: "#FFFFFF"
-    code-bg: white
+    code-bg: "transparent"
+    pre-bg: "#FFFFFF"
     font-size-base: 1rem
     font-weight-bold: 500
     line-height-base: 1.5
@@ -27,17 +31,18 @@ home:
   strip_header: false
   links:
   - text: Personal blog
-    href: https://mbacou.com/
+    href: https://github.mbacou.io/mb-labs
 
 navbar:
   bg: secondary
   type: light
   title: ~
   structure:
-    left:  [intro, reference, news]
-    right: [github, telegram, lightswitch]
+    left:  [articles, reference, news]
+    right: [github, linkedin, youtube, telegram, "---", search, lightswitch]
+  
   components:
-    home: ~
+    home: ~  
     reference:
       text: Reference
       href: reference/index.html
@@ -48,6 +53,14 @@ navbar:
       icon: fab fa-github fa-lg
       href: https://github.com/mbacou/mblabs
       aria-label: Github repo
+    linkedin:
+      icon: fab fa-linkedin fa-lg
+      href: https://linkedin.com/in/mbacou
+      aria-label: Linkedin
+    youtube:
+      icon: fab fa-youtube fa-lg
+      href: https://youtube.com/@mbacou
+      aria-label: YouTube      
     telegram:
       icon: fab fa-telegram fa-lg
       href: https://t.me/mbacou
