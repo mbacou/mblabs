@@ -20,8 +20,8 @@ Imports:
     yaml
 Suggests: here, knitr, usethis
 SystemRequirements: gdal, geos
-URL: https://github.com/mbacou/mb.themes/, https://github.mbacou.io/mb.themes
-BugReports: https://github.com/mbacou/mb.themes/issues/
+URL: https://github.com/mbacou/mblabs/, https://github.mbacou.io/mblabs
+BugReports: https://github.com/mbacou/mblabs/issues/
 VignetteBuilder: knitr
 RoxygenNote: 7.3.2
 Roxygen: list(markdown=TRUE)

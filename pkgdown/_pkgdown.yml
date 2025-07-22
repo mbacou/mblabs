@@ -3,27 +3,25 @@ destination: docs
 
 template:
   bootstrap: 5
-  light-switch: true
-  favicon: mb-square.png
-  image: mb-square.png
+  image: man/figures/logo.png
   open-graph: true  
   bslib:
     bg: "#f2f1f1"
     fg: "#333333"
     primary: "#5088C6"
-    secondary: "#FFFFFF"
+    secondary: "#ffffff"
     code-bg: "transparent"
-    pre-bg: "#FFFFFF"
-    font-size-base: 1rem
+    pre-bg: "#ffffff"
     font-weight-bold: 500
     line-height-base: 1.5
-    enable-rounded: false
+    border-radius: .25rem
+    bg-opacity: 1
 
 development:
   mode: auto
 
 authors:
-  "Melanie Bacou":
+  Melanie Bacou:
     href: https://linkedin.com/in/mbacou
 
 home:
@@ -34,13 +32,13 @@ home:
     href: https://github.mbacou.io/mb-labs
 
 navbar:
-  bg: secondary
-  type: light
+  background: "#ffffff"
   title: ~
+  tools-collapse: false
+  toggle-position: right  
   structure:
     left:  [articles, reference, news]
-    right: [search, github, linkedin, youtube, telegram, sep, lightswitch]
-  
+    right: [search, sep, github, linkedin, youtube, telegram]  
   components:
     home: ~  
     reference:
@@ -66,7 +64,7 @@ navbar:
       href: https://t.me/mbacou
       aria-label: Telegram
     sep:
-      text: "---"
+      text: "   "
 
 reference:
 - title: Bootstrap branding
