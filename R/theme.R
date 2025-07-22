@@ -337,15 +337,15 @@ theme_brand <- function(
     panel.grid.minor = element_blank(),
     
     panel.grid.major.x = if(str_detect(grid, "X")) element_line() 
-    else element_blank(),
+      else element_blank(),
     panel.grid.major.y = if(str_detect(grid, "Y")) element_line() 
-    else element_blank(),
+      else element_blank(),
     
     plot.title = element_text(face="plain", hjust=0, size=base_size*1.33),
     plot.subtitle = element_text(margin=margin(0,0,1,0, "lines"),
-    face="plain", size=base_size, hjust=0),
+      face="plain", size=base_size, hjust=0),
     plot.caption = element_text(margin=margin(0,3,0,0, "lines"),
-    size=base_size*0.8, hjust=0),
+      size=base_size*0.8, hjust=0, lineheight=1),
     
     strip.background = element_rect(),
     strip.text = element_text(face="bold", hjust=0, size=base_size),
@@ -401,14 +401,11 @@ theme_brand <- function(
 #'   scale_brand_df() +
 #'   guides(y=guide_axis(position="right")) +
 #'   theme_brand(grid="XY")
-#'
-#' \dontrun{
-#' brand_on()
-#' }
 #' 
 #' gglabs(mtcars, aes(wt, mpg, color=carb), axes="topright") +
 #'   geom_smooth(color=pal("red"), fill=pal("pink")) +
 #'   geom_point(size=3) +
+#'   guides(color=guide_legend(nrow=1) +
 #'   labs(
 #'     title = "My Beautiful Plot with X-axis at the Top",
 #'     subtitle = "My descriptive subtitle with units",

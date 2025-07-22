@@ -56,13 +56,10 @@ ggplot(mtcars, aes(factor(carb), mpg, fill=factor(carb))) +
   guides(y=guide_axis(position="right")) +
   theme_brand(grid="XY")
 
-\dontrun{
-brand_on()
-}
-
 gglabs(mtcars, aes(wt, mpg, color=carb), axes="topright") +
   geom_smooth(color=pal("red"), fill=pal("pink")) +
   geom_point(size=3) +
+  guides(color=guide_legend(nrow=1) +
   labs(
     title = "My Beautiful Plot with X-axis at the Top",
     subtitle = "My descriptive subtitle with units",
