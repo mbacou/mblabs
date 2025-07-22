@@ -39,7 +39,7 @@ navbar:
   title: ~
   structure:
     left:  [articles, reference, news]
-    right: [github, linkedin, youtube, telegram, "---", search, lightswitch]
+    right: [search, github, linkedin, youtube, telegram, sep, lightswitch]
   
   components:
     home: ~  
@@ -65,6 +65,8 @@ navbar:
       icon: fab fa-telegram fa-lg
       href: https://t.me/mbacou
       aria-label: Telegram
+    sep:
+      text: "---"
 
 reference:
 - title: Bootstrap branding

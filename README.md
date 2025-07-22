@@ -1,4 +1,4 @@
-<img class="float-end img-thumbnail m-3" src="pkgdown/mb-square.png"/>
+<img class="float-end img-thumbnail m-3" src="mb-square.png"/>
 
 # mblabs
 
