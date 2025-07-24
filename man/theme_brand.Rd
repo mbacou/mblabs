@@ -216,7 +216,7 @@ ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) + geom_col() +
     title = "Same Plot with no Bootstrap Branding",
     subtitle = "My very long subtitle with many units",
     caption = "My very long plot caption with many references.") +
-    theme_brand(grid="XY", 
+    theme_brand(grid="XY",
       base_color="gray", base_bg="white", base_family="Pacifico")
 
 ggplot(mtcars, aes(factor(carb), mpg, fill=carb)) + geom_col() +

@@ -12,9 +12,7 @@ brand.colors(n = NULL, colors = pal(), alpha = 0.9, ...)
 \item{colors}{colors to interpolate; must be a valid argument to
     \code{\link[grDevices]{col2rgb}()}.}
 
-\item{alpha}{logical: should alpha channel (opacity) values be
-    returned?   It is an error to give a true value if
-    \code{space} is specified.}
+\item{alpha}{transparency \link{0,1}}
 
 \item{...}{
   Arguments passed on to \code{\link[grDevices:colorRamp]{grDevices::colorRampPalette}}

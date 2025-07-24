@@ -19,7 +19,7 @@ must be supplied in each layer added to the plot.}
 \item{mapping}{Default list of aesthetic mappings to use for plot.
 If not specified, must be supplied in each layer added to the plot.}
 
-\item{axes}{2-length vector to control the position of X (\code{bottom} or \code{top}) and Y (\code{left} or \code{right}) axes (default: \code{c("bottom", "right")})}
+\item{axes}{position of X (\code{bottom} or \code{top}) and Y (\code{left} or \code{right}) axes (default: \code{bottomright})}
 
 \item{...}{
   Arguments passed on to \code{\link[=theme_brand]{theme_brand}}
@@ -65,7 +65,7 @@ gglabs(mtcars, aes(wt, mpg, color=carb), axes="topright") +
     subtitle = "My descriptive subtitle with units",
     caption = "My plot caption with many references.")
 
-gglabs(mtcars, aes(wt, mpg, color=factor(cyl)), 
+gglabs(mtcars, aes(wt, mpg, color=factor(cyl)),
   grid="XY", legend="bottom", base_family="Pacifico") +
   geom_point(size=3) +
   labs(

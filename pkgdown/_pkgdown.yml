@@ -77,6 +77,13 @@ reference:
   - -contains("theme")
   - pal
 
+- title: Modified basr R plots
+  desc: >
+    Opinionated **plot** customizations
+  contents:
+  - contains("plot")
+  - contains("par")
+
 - title: New ggplot2 geoms and scales
   desc: >
     Opinionated **ggplot2** customizations
