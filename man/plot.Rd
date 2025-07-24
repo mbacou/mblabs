@@ -87,7 +87,7 @@ plot(
 base R plot
 }
 \description{
-Shorthand function to generate base R plots with Mel B. Labs branding. Many tips derived from \href{https://r-charts.com/base-r/margins/}{r-charts.com}, since base R graphic documentation is often lacking.
+Shorthand function to generate base R plots with custom Bootstrap branding. Many tips derived from \href{https://r-charts.com/base-r/margins/}{r-charts.com}, since base R graphic documentation is often lacking.
 }
 \examples{
 set.seed(1)
@@ -103,7 +103,6 @@ abline(h=0, col=pal("red"), lwd=2)
 plot(x, type="h", col=pal(c("red", "green"))[(x > 0) + 1],
   main="Mel B. Labs Branded Plot", sub="Histogram")
 
-par.labs("family")
 par("fg")
 palette()
 

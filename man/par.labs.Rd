@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{par.labs}
 \alias{par.labs}
-\title{List of graphical parameters for Mel B. Labs branded plots}
+\title{List of graphical parameters for Bootstrap branded plots}
 \usage{
 par.labs(...)
 }

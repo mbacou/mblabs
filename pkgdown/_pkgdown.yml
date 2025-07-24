@@ -77,7 +77,7 @@ reference:
   - -contains("theme")
   - pal
 
-- title: Modified basr R plots
+- title: Modified base R plots
   desc: >
     Opinionated **plot** customizations
   contents:

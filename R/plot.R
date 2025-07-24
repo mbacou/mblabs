@@ -1,6 +1,6 @@
 #' Modified base R plot with Bootstrap branding
 #'
-#' Shorthand function to generate base R plots with Mel B. Labs branding. Many tips derived from [r-charts.com](https://r-charts.com/base-r/margins/), since base R graphic documentation is often lacking.
+#' Shorthand function to generate base R plots with custom Bootstrap branding. Many tips derived from [r-charts.com](https://r-charts.com/base-r/margins/), since base R graphic documentation is often lacking.
 #'
 #' @param axes position of X (`bottom` or `top`) and Y (`left` or `right`) axes (default: `bottomright`)
 #' @inheritParams graphics::plot.default
@@ -21,7 +21,6 @@
 #' plot(x, type="h", col=pal(c("red", "green"))[(x > 0) + 1],
 #'   main="Mel B. Labs Branded Plot", sub="Histogram")
 #'
-#' par.labs("family")
 #' par("fg")
 #' palette()
 #'
@@ -85,7 +84,7 @@ plot <- function(
   )
 }
 
-#' List of graphical parameters for Mel B. Labs branded plots
+#' List of graphical parameters for Bootstrap branded plots
 #'
 #' Sets graphical device parameters per branding guidelines. Uses `_brand.yml` configuration when provided explicitely via `brand()`, or else this package's built-in brand.
 #'
